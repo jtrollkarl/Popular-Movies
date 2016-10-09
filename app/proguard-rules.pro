@@ -6,7 +6,7 @@
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
-
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
 # Add any project specific keep options here:
 
 # If your project uses WebView with JS, uncomment the following

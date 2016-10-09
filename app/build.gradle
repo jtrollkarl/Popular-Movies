@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 24
@@ -28,7 +29,31 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
+
+    //butterknife
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    //end butterknife
+
+    //retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //end retrofit
+
+    //annotations
+    compile 'org.glassfish:javax.annotation:3.1.1'
+
+    //dbFlow
+    apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.1.1'
+    compile 'com.github.Raizlabs.DBFlow:dbflow-core:3.1.1'
+    compile 'com.github.Raizlabs.DBFlow:dbflow:3.1.1'
+    //end dbFlow
+
+    // kotlin extensions
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:3.1.1"
+    //end kotlin extensions
+
+
+
     testCompile 'junit:junit:4.12'
 }
