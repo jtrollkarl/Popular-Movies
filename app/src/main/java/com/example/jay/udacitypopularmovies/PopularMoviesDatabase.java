@@ -13,4 +13,5 @@ public class PopularMoviesDatabase {
     public static final String NAME = "MoviesDatabase";
     public static final int VERSION = 1;
 
+
 }

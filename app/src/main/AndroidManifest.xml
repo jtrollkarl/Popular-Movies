@@ -3,8 +3,10 @@
     package="com.example.jay.udacitypopularmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
+    
     <application
+        
         android:name=".PopularMoviesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,10 +21,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity" />
+            <provider
+            android:authorities="com.example.jay.udacitypopularmovies.provider"
+                android:name=".ContentProvider_Provider"
+                android:exported="false"
 
+            />
+        
         <service
             android:name=".RefreshMovies"
             android:exported="false"></service>
-    </application>
+    </application
+        >
 
 </manifest>

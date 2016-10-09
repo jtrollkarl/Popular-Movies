@@ -29,7 +29,7 @@ public class DatabaseStorageRetrieval {
                             @Override
                             public void processModel(Movie movie) {
                                 // do work here -- i.e. user.delete() or user.update()
-                                movie.save();
+                                movie.delete();
                             }
                         }).addAll(movies).build())  // add elements (can also handle multiple)
                 .error(new Transaction.Error() {

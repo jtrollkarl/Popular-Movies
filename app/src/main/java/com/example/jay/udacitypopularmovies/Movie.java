@@ -1,6 +1,7 @@
 
 package com.example.jay.udacitypopularmovies;
 
+import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -8,14 +9,23 @@ import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.provider.ContentUri;
+import com.raizlabs.android.dbflow.annotation.provider.TableEndpoint;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
 import javax.annotation.Generated;
 
-@Table(database = PopularMoviesDatabase.class)
+@TableEndpoint(name = Movie.ENDPOINT, contentProvider = ContentProvider.class)
+@Table(database = PopularMoviesDatabase.class, cachingEnabled = true)
 @Generated("org.jsonschema2pojo")
 public class Movie extends BaseModel {
+
+    public static final String ENDPOINT = "Movie";
+    @ContentUri(path = ENDPOINT, type = ContentUri.ContentType.VND_MULTIPLE + ENDPOINT)
+    public static final Uri CONTENT_URI = Uri.parse(ContentProvider.BASE_CONTENT_URI + ContentProvider.AUTHORITY
+            + "/" + ENDPOINT);
+    public static final String NAME = "Movie";
 
     @PrimaryKey(autoincrement = true)
     @SerializedName("id")
