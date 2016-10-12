@@ -4,10 +4,21 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.model.MovieDb;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -62,23 +73,45 @@ public class RefreshMovies extends IntentService {
 
     private void handleAppStart() {
         Log.d(TAG, "Starting app");
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("http://api.themoviedb.org")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         PopularMoviesService service = retrofit.create(PopularMoviesService.class);
-        Call<Page> movies = service.listMovies(Page.POPULAR);
-        ArrayList<Movie> results;
+        Call<Page> movies = service.listMovies(Page.POPULAR, MovieApiKey.ApiKey);
+        Log.d(TAG, "Request is: " + movies.request().url());
+        //ArrayList<Movie> resultsList;
+
+        TmdbMovies moviesList = new TmdbApi(MovieApiKey.ApiKey).getMovies();
+
+        Log.d(TAG, moviesList.getPopularMovies("", 1).getResults().toString());
 
         try {
-            results = (ArrayList<Movie>) movies.execute().body().getMovies();
+            Response<Page> response = movies.execute();
+            if(response.errorBody() != null){
+                Log.d(TAG, response.errorBody().string());
+            }
+            //List<Movie> listt = gson.fromJson("results", Movie.class);
+            Log.d(TAG, "Request is: "+ String.valueOf(response.isSuccessful()));
+            Log.d(TAG, String.valueOf(response.body().getTotalResults()));
+            List<Movie> listofmovies = response.body().getResults();
+            System.out.println(listofmovies.get(0).getId());
+            listofmovies.get(0).getOriginalLanguage();
             DatabaseStorageRetrieval db = new DatabaseStorageRetrieval();
-            db.insert(results);
+            //db.insert(results);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

@@ -1,6 +1,6 @@
 package com.example.jay.udacitypopularmovies;
 
-import android.content.Intent;
+
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -9,21 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.list.FlowCursorList;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-
-import java.io.IOException;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     /**
      * Use a background thread (intent service) to fill the db. Then use a cursor loader
@@ -31,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
      * top rated or most popular).
      */
 
+    private MovieAdapter adapter;
 
-    @BindView(R.id.activity_main) RecyclerView recyclerView;
+    @BindView(R.id.activity_main_recycler) RecyclerView recyclerView;
 
     private static final String TAG = MainActivity.class.getSimpleName();
     @Override
@@ -40,32 +32,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        recyclerView.setHasFixedSize(true);
+
+        //layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //end layoutmanager
+
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new MovieAdapter(this, null);
+        recyclerView.setAdapter(adapter);
 
 
-        FlowManager.getDatabase(PopularMoviesDatabase.class).getWritableDatabase();
-
-        //Picasso.with(this).load("http://www.justininacio.ca/images/avatar.jpg").into(imageView);
+        //FlowManager.getDatabase(PopularMoviesDatabase.class).getWritableDatabase();
+        getSupportLoaderManager().initLoader(1, null, this);
 
     }
-    private LoaderManager.LoaderCallbacks loaderCallbacks = new LoaderManager.LoaderCallbacks() {
-        @Override
-        public Loader onCreateLoader(int id, Bundle args) {
-            return new UILoader(getApplicationContext());
-        }
 
-        @Override
-        public void onLoadFinished(Loader loader, Object data) {
 
-        }
 
-        @Override
-        public void onLoaderReset(Loader loader) {
 
-        }
-    };
+    //loader callbacks
+    @Override
+    public Loader onCreateLoader(int id, Bundle args) {
+        Log.d(TAG, "Creating loader");
+        return new UILoader(getApplicationContext());
+    }
 
+    @Override
+    public void onLoadFinished(Loader loader, Cursor cursor) {
+        Log.d(TAG, "Load finished");
+        //Log.d(TAG, cursor.getString(cursor.getColumnIndexOrThrow("title")));
+        adapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader loader) {
+        Log.d(TAG, "Loader reset");
+        adapter.swapCursor(null);
+    }
 }

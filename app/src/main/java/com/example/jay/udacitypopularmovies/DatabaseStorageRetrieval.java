@@ -29,6 +29,8 @@ public class DatabaseStorageRetrieval {
                             @Override
                             public void processModel(Movie movie) {
                                 // do work here -- i.e. user.delete() or user.update()
+                                Log.d(TAG, String.valueOf(movie.getId()));
+                                movie.insert();
                                 movie.save();
                             }
                         }).addAll(movies).build())  // add elements (can also handle multiple)

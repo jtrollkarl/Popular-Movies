@@ -3,11 +3,9 @@ package com.example.jay.udacitypopularmovies;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
-
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import java.util.List;
 
 /**
  * Created by Jay on 2016-10-09.
@@ -33,7 +31,8 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
                 .orderBy(Movie_Table.popularity, true)
                 .cursorList();
 
-        list.close();
+        //list.close();
+        //loader handles the closing of the cursor?
         return list.cursor();
     }
 

@@ -13,6 +13,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,10 +43,16 @@ dependencies {
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     //end retrofit
 
     //annotations
     compile 'org.glassfish:javax.annotation:3.1.1'
+    compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile 'org.apache.commons:commons-lang3:3.4'
+
 
     //dbFlow
     apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.1.1'
@@ -52,6 +63,9 @@ dependencies {
     // kotlin extensions
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:3.1.1"
     //end kotlin extensions
+
+    //moviedb api
+    compile group: 'info.movito', name: 'themoviedbapi', version:'1.4'
 
 
 
