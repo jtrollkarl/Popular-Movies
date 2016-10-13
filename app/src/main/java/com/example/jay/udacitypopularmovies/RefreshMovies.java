@@ -105,11 +105,11 @@ public class RefreshMovies extends IntentService {
             //List<Movie> listt = gson.fromJson("results", Movie.class);
             Log.d(TAG, "Request is: "+ String.valueOf(response.isSuccessful()));
             Log.d(TAG, String.valueOf(response.body().getTotalResults()));
-            List<Movie> listofmovies = response.body().getResults();
-            System.out.println(listofmovies.get(0).getId());
+            ArrayList<Movie> listofmovies = (ArrayList<Movie>) response.body().getResults();
+            System.out.println(listofmovies.size());
             listofmovies.get(0).getOriginalLanguage();
             DatabaseStorageRetrieval db = new DatabaseStorageRetrieval();
-            //db.insert(results);
+            db.insert(listofmovies);
         } catch (IOException e) {
             e.printStackTrace();
         }

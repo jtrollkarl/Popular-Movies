@@ -28,7 +28,7 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
         FlowCursorList<Movie> list = SQLite.select()
                 .from(Movie.class)
                 .where()
-                .orderBy(Movie_Table.popularity, true)
+                .orderBy(Movie_Table.popularity, false)
                 .cursorList();
 
         //list.close();

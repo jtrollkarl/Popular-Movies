@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class DatabaseStorageRetrieval {
 
     private static final String TAG = DatabaseStorageRetrieval.class.getSimpleName();
-    private int count;
 
     public void insert(final ArrayList<Movie> movies){
 
@@ -30,7 +29,8 @@ public class DatabaseStorageRetrieval {
                             public void processModel(Movie movie) {
                                 // do work here -- i.e. user.delete() or user.update()
                                 Log.d(TAG, String.valueOf(movie.getId()));
-                                movie.insert();
+                                //movie.insert();
+                                movie.update();
                                 movie.save();
                             }
                         }).addAll(movies).build())  // add elements (can also handle multiple)
