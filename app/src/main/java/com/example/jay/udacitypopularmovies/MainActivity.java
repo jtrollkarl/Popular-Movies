@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MovieAdapter(this, null);
-        
+        recyclerView.addItemDecoration(new RecyclerViewItemDecorator(10));
         recyclerView.setAdapter(adapter);
+
 
 
 

@@ -1,8 +1,13 @@
 package com.example.jay.udacitypopularmovies;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.LocalBroadcastManager;
+
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -13,12 +18,19 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 public class UILoader extends AsyncTaskLoader<Cursor> {
 
+    public static final String ACTION_FORCE = UILoader.class.getSimpleName() + ":FORCE_LOAD";
+
     public UILoader(Context context) {
         super(context);
     }
 
     @Override
     protected void onStartLoading() {
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        IntentFilter filter = new IntentFilter(ACTION_FORCE);
+        localBroadcastManager.registerReceiver(broadcastReceiver, filter);
+
+
         forceLoad();
 
     }
@@ -40,4 +52,20 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
     public void deliverResult(Cursor data) {
         super.deliverResult(data);
     }
+
+
+    @Override
+    protected void onReset() {
+        super.onReset();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(ACTION_FORCE)){
+                forceLoad();
+            }
+        }
+    };
 }

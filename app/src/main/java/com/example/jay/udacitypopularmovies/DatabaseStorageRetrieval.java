@@ -1,5 +1,8 @@
 package com.example.jay.udacitypopularmovies;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -18,7 +21,7 @@ public class DatabaseStorageRetrieval {
 
     private static final String TAG = DatabaseStorageRetrieval.class.getSimpleName();
 
-    public void insert(final ArrayList<Movie> movies){
+    public static void insert(final Context context, final ArrayList<Movie> movies){
 
         Log.w(TAG, "db class started");
 
@@ -45,6 +48,8 @@ public class DatabaseStorageRetrieval {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d(TAG, "Success");
+                        Intent intent = new Intent(UILoader.ACTION_FORCE);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     }
                 }).build().execute();
 

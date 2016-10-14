@@ -109,7 +109,7 @@ public class RefreshMovies extends IntentService {
             System.out.println(listofmovies.size());
             listofmovies.get(0).getOriginalLanguage();
             DatabaseStorageRetrieval db = new DatabaseStorageRetrieval();
-            db.insert(listofmovies);
+            db.insert(this, listofmovies);
         } catch (IOException e) {
             e.printStackTrace();
         }
