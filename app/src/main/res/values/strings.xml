@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">UdacityPopularMovies</string>
     <string name="test">test</string>
+    <string name="release_date">Release date</string>
+    <string name="user_rating">User rating</string>
+    <string name="favourite">Favourite</string>
+    <string name="sort_by_popularity">Sort by popularity</string>
+    <string name="sort_by_rating">Sort by rating</string>
 </resources>

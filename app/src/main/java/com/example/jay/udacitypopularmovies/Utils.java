@@ -28,6 +28,7 @@ public class Utils {
         * @param popularity*/
 
         Movie movie = new Movie();
+        movie.setBackdropPath(c.getString(c.getColumnIndexOrThrow("backdropPath")));
         movie.setTitle(c.getString(c.getColumnIndexOrThrow("title")));
         movie.setReleaseDate(c.getString(c.getColumnIndexOrThrow("releaseDate")));
         movie.setOverview(c.getString(c.getColumnIndexOrThrow("overview")));

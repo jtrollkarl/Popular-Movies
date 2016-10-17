@@ -60,13 +60,9 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
             @Override
             public void onClick(View v) {
                 Intent detailIntent = new Intent(getContext(), DetailActivity.class);
-                //create an arraylist
-                ArrayList<Movie> listMovie = new ArrayList<Movie>();
-                //add movie object to arraylist
                 Log.d(TAG, String.valueOf(cursor.moveToPosition(viewHolder.getLayoutPosition())));
-                listMovie.add(Utils.cursorToMovie(cursor));
                 //add extra data to intent
-                detailIntent.putParcelableArrayListExtra("movie", listMovie);
+                detailIntent.putExtra("movie", Utils.cursorToMovie(cursor));
                 //start intent
                 getContext().startActivity(detailIntent);
             }
