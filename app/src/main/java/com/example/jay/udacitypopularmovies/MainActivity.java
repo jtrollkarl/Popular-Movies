@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static int SORT_METHOD;
+    private boolean mTwoPane;
 
 
     @Override
@@ -41,6 +42,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if(findViewById(R.id.details_container) != null){
+            mTwoPane = true;
+
+
+            if(savedInstanceState == null){
+                //getSupportFragmentManager().beginTransaction().
+            }
+        }else{
+            mTwoPane = false;
+        }
 
         //getSupportActionBar().hide();
         //layout manager
