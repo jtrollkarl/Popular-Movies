@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="?android:attr/dividerHorizontal"
-    tools:context="com.example.jay.udacitypopularmovies.MainActivity">
+    tools:context="com.example.jay.udacitypopularmovies.activities.MainActivity">
 
 
     <fragment

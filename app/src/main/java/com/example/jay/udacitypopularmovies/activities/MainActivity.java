@@ -1,25 +1,20 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.activities;
 
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.example.jay.udacitypopularmovies.MovieAdapter;
+import com.example.jay.udacitypopularmovies.fragments.MovieFragment;
+import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.RefreshMovies;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MainActivity extends AppCompatActivity {
 
     /**
      * Use a background thread (intent service) to fill the db. Then use a cursor loader
@@ -28,10 +23,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
 
     private MovieAdapter adapter;
-
-    @BindView(R.id.activity_main_recycler) RecyclerView recyclerView;
-
-
     private static final String TAG = MainActivity.class.getSimpleName();
     public static int SORT_METHOD;
     private boolean mTwoPane;
@@ -42,9 +33,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MovieFragment movieFragment = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.movie_fragment);
-        ButterKnife.bind(this);
-
+        MovieFragment movieFragment = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movie);
         if(findViewById(R.id.details_container) != null){
             mTwoPane = true;
             if(savedInstanceState == null){
@@ -53,22 +42,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }else{
             mTwoPane = false;
         }
-
-        //getSupportActionBar().hide();
-        //layout manager
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-        //end layoutmanager
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new MovieAdapter(this, null);
-        recyclerView.addItemDecoration(new RecyclerViewItemDecorator(10));
-        recyclerView.setAdapter(adapter);
-
-
-        //FlowManager.getDatabase(PopularMoviesDatabase.class).getWritableDatabase();
-        getSupportLoaderManager().initLoader(1, null, this);
-
     }
 
 
@@ -98,25 +71,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
              return true;
          }
         return true;
-    }
-
-    //loader callbacks
-    @Override
-    public Loader onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "Creating loader");
-        return new UILoader(getApplicationContext());
-    }
-
-    @Override
-    public void onLoadFinished(Loader loader, Cursor cursor) {
-        Log.d(TAG, "Load finished");
-        //Log.d(TAG, cursor.getString(cursor.getColumnIndexOrThrow("title")));
-        adapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader loader) {
-        Log.d(TAG, "Loader reset");
-        adapter.swapCursor(null);
     }
 }
