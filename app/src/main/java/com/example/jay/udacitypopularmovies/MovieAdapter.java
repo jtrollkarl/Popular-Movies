@@ -3,9 +3,6 @@ package com.example.jay.udacitypopularmovies;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.Image;
-import android.os.Bundle;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.jay.udacitypopularmovies.activities.DetailActivity;
 import com.example.jay.udacitypopularmovies.adapters.CursorRecyclerViewAdapter;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jay on 2016-10-11.
