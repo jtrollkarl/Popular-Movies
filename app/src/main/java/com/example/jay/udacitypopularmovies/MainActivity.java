@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MovieFragment movieFragment = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.movie_fragment);
         ButterKnife.bind(this);
 
         if(findViewById(R.id.details_container) != null){
             mTwoPane = true;
-
-
             if(savedInstanceState == null){
                 //getSupportFragmentManager().beginTransaction().
             }
