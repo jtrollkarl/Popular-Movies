@@ -1,28 +1,21 @@
 package com.example.jay.udacitypopularmovies.activities;
 
-import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.example.jay.udacitypopularmovies.Movie;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.fragments.DetailFragment;
-import com.example.jay.udacitypopularmovies.fragments.MovieFragment;
-import com.squareup.picasso.Picasso;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity  {
 
 
     Toolbar toolbar;
@@ -33,20 +26,19 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Movie movie = getIntent().getParcelableExtra("movie");
-        DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_detail);
-        detailFragment.loadMovie(movie);
 
+        DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.details_container);
+        Movie movie = getIntent().getParcelableExtra("movie");
+        detailFragment.loadMoviePhone(movie);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //toolbar.inflateMenu(R.menu.menu_detail);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().hide();
 
-        //loadMovie(movie);
-        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        //collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        this.setTitle(movie.getTitle());
     }
+
 
 
     @Override
@@ -66,10 +58,5 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
 
 }

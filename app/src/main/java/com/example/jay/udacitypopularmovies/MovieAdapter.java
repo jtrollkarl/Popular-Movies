@@ -23,10 +23,17 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
 
     public static final String TAG = MovieAdapter.class.getSimpleName();
 
-    public MovieAdapter(Context context, Cursor cursor) {
-        super(context, cursor);
+
+    private MovieSelectedListener listener;
+
+    public interface MovieSelectedListener{
+        void onMovieSelected(Movie movie);
     }
 
+    public MovieAdapter(Context context, Cursor cursor) {
+        super(context, cursor);
+        listener = (MovieSelectedListener) context;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView poster;
@@ -55,12 +62,9 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailIntent = new Intent(getContext(), DetailActivity.class);
-                Log.d(TAG, String.valueOf(cursor.moveToPosition(viewHolder.getLayoutPosition())));
-                //add extra data to intent
-                detailIntent.putExtra("movie", Utils.cursorToMovie(cursor));
-                //start intent
-                getContext().startActivity(detailIntent);
+                Log.d(TAG, "cardview clicked " + cursor.getPosition());
+                cursor.moveToPosition(viewHolder.getLayoutPosition());
+                listener.onMovieSelected(Utils.cursorToMovie(cursor));
             }
         });
     }

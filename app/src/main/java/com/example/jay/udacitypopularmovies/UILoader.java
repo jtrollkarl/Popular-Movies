@@ -21,11 +21,12 @@ import com.raizlabs.android.dbflow.sql.language.property.DoubleProperty;
 public class UILoader extends AsyncTaskLoader<Cursor> {
 
     public static final String ACTION_FORCE = UILoader.class.getSimpleName() + ":FORCE_LOAD";
-    public static DoubleProperty PROPERTY = null;
     private static final String TAG = UILoader.class.getSimpleName();
+    private int LOADER_ID;
 
-    public UILoader(Context context) {
+    public UILoader(int LOADER_ID, Context context) {
         super(context);
+        this.LOADER_ID = LOADER_ID;
     }
 
     @Override
@@ -39,9 +40,33 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
 
     @Override
     public Cursor loadInBackground() {
-        Log.d(TAG, String.valueOf(PROPERTY));
+        Log.d(TAG, String.valueOf(LOADER_ID));
 
-        if(PROPERTY == null){
+        switch (LOADER_ID){
+            case 1:
+                FlowCursorList<Movie> listPopular = SQLite.select()
+                        .from(Movie.class)
+                        .where()
+                        .orderBy(Movie_Table.popularity, false)
+                        .cursorList();
+                return listPopular.cursor();
+            case 2:
+                FlowCursorList<Movie> listTop_Rated = SQLite.select()
+                        .from(Movie.class)
+                        .where()
+                        .orderBy(Movie_Table.voteAverage, false)
+                        .cursorList();
+                return listTop_Rated.cursor();
+            case 3:
+                FlowCursorList<Favourite> listFav = SQLite.select()
+                        .from(Favourite.class)
+                        .where()
+                        .cursorList();
+                return listFav.cursor();
+
+        }
+
+/*        if(PROPERTY == null){
             PROPERTY = Movie_Table.popularity;
         }
 
@@ -53,7 +78,8 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
 
         //list.close();
         //loader handles the closing of the cursor?
-        return list.cursor();
+        return list.cursor();*/
+        return null;
     }
 
 

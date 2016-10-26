@@ -23,8 +23,6 @@ public class DatabaseStorageRetrieval {
 
     public static void insert(final Context context, final ArrayList<Movie> movies){
 
-        Log.w(TAG, "db class started");
-
         FlowManager.getDatabase(PopularMoviesDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<Movie>() {
@@ -38,8 +36,6 @@ public class DatabaseStorageRetrieval {
                                 movie.save();
                                 Log.d(TAG, "Inserting movie");
 
-
-                                //movie.save();
                             }
                         }).addAll(movies).build())  // add elements (can also handle multiple)
                 .error(new Transaction.Error() {

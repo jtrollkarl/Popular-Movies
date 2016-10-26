@@ -45,15 +45,10 @@ public class RefreshMovies extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_SWITCH_POPULAR.equals(action)) {
-
-                UILoader.PROPERTY = Movie_Table.popularity;
                 handleRefresh(Page.POPULAR);
             } else if (ACTION_APP_START.equals(action)) {
-
-                UILoader.PROPERTY = Movie_Table.popularity;
                 handleRefresh(Page.POPULAR);
             } else if (ACTION_SWTICH_TOP_RATED.equals(action)){
-                UILoader.PROPERTY = Movie_Table.voteAverage;
                 handleRefresh(Page.TOP_RATED);
             }
         }
@@ -80,8 +75,6 @@ public class RefreshMovies extends IntentService {
         PopularMoviesService service = retrofit.create(PopularMoviesService.class);
         Call<Page> movies = service.listMovies(action, MovieApiKey.ApiKey);
         Log.d(TAG, "Request is: " + movies.request().url());
-        //ArrayList<Movie> resultsList;
-
 
 
         try {
