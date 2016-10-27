@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
      */
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static int SORT_METHOD;
     private boolean mTwoPane;
 
 
@@ -50,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }else{
             Log.d(TAG, "detail_container id found");
             DetailFragment detailFragment = new DetailFragment();
+            detailFragment.update(movie);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            detailFragment.loadMovieTablet(movie);
             transaction.replace(R.id.details_container, detailFragment);
             transaction.addToBackStack(null);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

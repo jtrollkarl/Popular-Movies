@@ -86,6 +86,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //movieCurrent = getActivity().getIntent().getParcelableExtra("movie");
 
         Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
@@ -104,7 +105,6 @@ public class DetailFragment extends Fragment {
         adapter = new TrailerAdapter(getContext());
         trailerRecycler.setLayoutManager(lm);
         trailerRecycler.setAdapter(adapter);
-
         return view;
     }
 
@@ -116,59 +116,17 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, String.valueOf(view == null));
         Log.d(TAG, "onViewCreated");
         if (view != null && movieCurrent != null) {
-
-            movieSynopsis.setText(movieCurrent.getOverview());
-            movieRating.setText(String.valueOf(movieCurrent.getVoteAverage()));
-            movieTitle.setText(movieCurrent.getTitle());
-            movieRelease.setText(movieCurrent.getReleaseDate());
-
-            Log.d(TAG, "loadMovie called");
-            Picasso.with(getActivity())
-                    .load("http://image.tmdb.org/t/p/w500//" + movieCurrent.getBackdropPath())
-                    .into(poster);
-
-            Picasso.with(getActivity())
-                    .load("http://image.tmdb.org/t/p/w185//" + movieCurrent.getPosterPath())
-                    .into(detailMovie);
-
-            sendTrailerRequest(String.valueOf(movieCurrent.getId()));
-
-            fabFavourite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Favourite fav = new Favourite();
-                    fav.setId(movieCurrent.getId());
-                    fav.setBackdropPath(movieCurrent.getBackdropPath());
-                    fav.setPopularity(movieCurrent.getPopularity());
-                    fav.setVoteCount(movieCurrent.getVoteCount());
-                    fav.setVoteAverage(movieCurrent.getVoteAverage());
-                    fav.setAdult(movieCurrent.isAdult());
-                    fav.setOverview(movieCurrent.getOverview());
-                    fav.setOriginalLanguage(movieCurrent.getOriginalLanguage());
-                    fav.setPosterPath(movieCurrent.getPosterPath());
-                    fav.setOriginalTitle(movieCurrent.getOriginalTitle());
-                    fav.setReleaseDate(movieCurrent.getReleaseDate());
-                    fav.setTitle(movieCurrent.getTitle());
-                    if (fav.exists()) {
-                        Toast.makeText(getContext(), movieCurrent.getTitle() + " removed from favourites", Toast.LENGTH_SHORT).show();
-                        fav.delete();
-                        return;
-                    }
-                    fav.insert();
-                    fav.save();
-                    Toast.makeText(getContext(), movieCurrent.getTitle() + " added to favourites", Toast.LENGTH_SHORT).show();
-                }
-            });
+            loadMovie(movieCurrent);
         }
     }
 
-    public void loadMoviePhone(Movie movie) {
+    public void loadMovie(Movie movie) {
         Log.d(TAG, String.valueOf(movie.getId()));
         this.movieCurrent = movie;
 
-        //TODO: is there an easier way of setting the movie when using an activity? The call to loadMoviePhone in detailactivity gets called after onViewCreated, thus leading to NPE due to no Movie obj being set to the fragment
+        //TODO: is there an easier way of setting the movie when using an activity? The call to loadMovie in detailactivity gets called after onViewCreated, thus leading to NPE due to no Movie obj being set to the fragment
         Log.d(TAG, movie.getOriginalTitle());
-        movieSynopsis.setText(movie.getOverview());
+        movieSynopsis.setText(movieCurrent.getOverview());
         movieRating.setText(String.valueOf(movie.getVoteAverage()));
         movieTitle.setText(movie.getTitle());
         movieRelease.setText(movie.getReleaseDate());
@@ -212,9 +170,10 @@ public class DetailFragment extends Fragment {
         });
     }
 
-    public void loadMovieTablet(Movie movie) {
-        Log.d(TAG, String.valueOf(movie.getId()));
+    public void update(Movie movie){
+        Log.d(TAG, movie.getOriginalTitle());
         this.movieCurrent = movie;
+        Log.d(TAG, movieCurrent.getOriginalTitle());
     }
 
     private void sendTrailerRequest(String id) {

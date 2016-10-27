@@ -1,11 +1,8 @@
 package com.example.jay.udacitypopularmovies.adapters;
-
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.ResultReviews;
 import com.example.jay.udacitypopularmovies.ResultTrailer;
-import com.example.jay.udacitypopularmovies.Trailer;
 import com.example.jay.udacitypopularmovies.Urls;
 import com.squareup.picasso.Picasso;
 

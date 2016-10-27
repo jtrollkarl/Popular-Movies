@@ -1,8 +1,6 @@
 package com.example.jay.udacitypopularmovies.activities;
 
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +27,8 @@ public class DetailActivity extends AppCompatActivity  {
 
         DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.details_container);
         Movie movie = getIntent().getParcelableExtra("movie");
-        detailFragment.loadMoviePhone(movie);
+        Log.d(TAG, movie.getOriginalTitle());
+        detailFragment.loadMovie(movie);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
