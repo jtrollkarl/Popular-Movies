@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,11 +46,11 @@ public class RefreshMovies extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_SWITCH_POPULAR.equals(action)) {
-                handleRefresh(Page.POPULAR);
+                handleMoviesAsync(Page.POPULAR);
             } else if (ACTION_APP_START.equals(action)) {
-                handleRefresh(Page.POPULAR);
+                handleMoviesAsync(Page.POPULAR);
             } else if (ACTION_SWTICH_TOP_RATED.equals(action)){
-                handleRefresh(Page.TOP_RATED);
+                handleMoviesAsync(Page.TOP_RATED);
             }
         }
     }
@@ -88,5 +89,52 @@ public class RefreshMovies extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleMoviesAsync(String action){
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.themoviedb.org")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+
+
+        PopularMoviesService service = retrofit.create(PopularMoviesService.class);
+        Call<Page> movies = service.listMovies(action, MovieApiKey.ApiKey);
+        Log.d(TAG, "Request is: " + movies.request().url());
+
+        movies.enqueue(new Callback<Page>() {
+            @Override
+            public void onResponse(Call<Page> call, Response<Page> response) {
+                if(response.isSuccessful()){
+                    if(response.errorBody() != null){
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    ArrayList<Movie> listofmovies = (ArrayList<Movie>) response.body().getResults();
+                    DatabaseStorageRetrieval.insert(RefreshMovies.this, listofmovies);
+                }else{
+                    //somerhing went wrong
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Page> call, Throwable t) {
+
+                Log.d(TAG, t.getMessage());
+            }
+        });
     }
 }
