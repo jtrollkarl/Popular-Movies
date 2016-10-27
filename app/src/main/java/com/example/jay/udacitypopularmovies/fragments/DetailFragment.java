@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,11 +20,25 @@ import android.widget.Toast;
 
 import com.example.jay.udacitypopularmovies.Favourite;
 import com.example.jay.udacitypopularmovies.Movie;
+import com.example.jay.udacitypopularmovies.PopularMoviesService;
 import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.ResultTrailer;
+import com.example.jay.udacitypopularmovies.Trailer;
+import com.example.jay.udacitypopularmovies.adapters.TrailerAdapter;
+import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,8 +65,12 @@ public class DetailFragment extends Fragment {
     TextView movieSynopsis;
     @BindView(R.id.fabFavourite)
     FloatingActionButton fabFavourite;
+    @BindView(R.id.trailer_recycler)
+    RecyclerView trailerRecycler;
 
 
+    TrailerAdapter adapter;
+    private Retrofit retrofit;
     private Movie movieCurrent;
 
     @Override
@@ -70,6 +90,21 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.themoviedb.org")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        adapter = new TrailerAdapter(getContext());
+        trailerRecycler.setLayoutManager(lm);
+        trailerRecycler.setAdapter(adapter);
+
         return view;
     }
 
@@ -80,7 +115,7 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, String.valueOf(movieCurrent == null));
         Log.d(TAG, String.valueOf(view == null));
         Log.d(TAG, "onViewCreated");
-        if (view != null && movieCurrent !=null) {
+        if (view != null && movieCurrent != null) {
 
             movieSynopsis.setText(movieCurrent.getOverview());
             movieRating.setText(String.valueOf(movieCurrent.getVoteAverage()));
@@ -96,6 +131,7 @@ public class DetailFragment extends Fragment {
                     .load("http://image.tmdb.org/t/p/w185//" + movieCurrent.getPosterPath())
                     .into(detailMovie);
 
+            sendTrailerRequest(String.valueOf(movieCurrent.getId()));
 
             fabFavourite.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,7 +149,7 @@ public class DetailFragment extends Fragment {
                     fav.setOriginalTitle(movieCurrent.getOriginalTitle());
                     fav.setReleaseDate(movieCurrent.getReleaseDate());
                     fav.setTitle(movieCurrent.getTitle());
-                    if(fav.exists()){
+                    if (fav.exists()) {
                         Toast.makeText(getContext(), movieCurrent.getTitle() + " removed from favourites", Toast.LENGTH_SHORT).show();
                         fav.delete();
                         return;
@@ -146,6 +182,8 @@ public class DetailFragment extends Fragment {
                 .load("http://image.tmdb.org/t/p/w185//" + movie.getPosterPath())
                 .into(detailMovie);
 
+        sendTrailerRequest(String.valueOf(movie.getId()));
+
         fabFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +200,7 @@ public class DetailFragment extends Fragment {
                 fav.setOriginalTitle(movieCurrent.getOriginalTitle());
                 fav.setReleaseDate(movieCurrent.getReleaseDate());
                 fav.setTitle(movieCurrent.getTitle());
-                if(fav.exists()){
+                if (fav.exists()) {
                     Toast.makeText(getContext(), movieCurrent.getTitle() + " removed from favourites", Toast.LENGTH_SHORT).show();
                     fav.delete();
                     return;
@@ -178,4 +216,32 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, String.valueOf(movie.getId()));
         this.movieCurrent = movie;
     }
+
+    private void sendTrailerRequest(String id) {
+        PopularMoviesService service = retrofit.create(PopularMoviesService.class);
+        Call<Trailer> trailerCall = service.listTrailers(id, MovieApiKey.ApiKey);
+        Log.d(TAG, "Request is: " + trailerCall.request().url());
+        trailerCall.enqueue(new Callback<Trailer>() {
+            @Override
+            public void onResponse(Call<Trailer> call, Response<Trailer> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, response.body().toString());
+                    ArrayList<ResultTrailer> trailers = (ArrayList<ResultTrailer>) response.body().getResults();
+                    Log.d(TAG, "Trailers: " + trailers.toString());
+                    adapter.setTrailers(trailers);
+                } else {
+                    //something went wrong;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Trailer> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
 }

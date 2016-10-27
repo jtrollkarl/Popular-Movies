@@ -102,7 +102,7 @@ public class Review {
      * @return
      *     The resultReviewses
      */
-    public List<ResultReviews> getResultReviewses() {
+    public List<ResultReviews> getResult() {
         return resultReviewses;
     }
 

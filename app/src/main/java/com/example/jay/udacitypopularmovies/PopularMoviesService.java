@@ -15,9 +15,9 @@ public interface PopularMoviesService {
     Call<Page> listMovies(@Path("type") String type, @Query("api_key") String apiKey);
 
     @GET("/3/movie/{id}/reviews")
-    Call<ResultReviews> listReviews(@Path("id") String type, @Query("api_key") String apiKey);
+    Call<Review> listReviews(@Path("id") String id, @Query("api_key") String apiKey);
 
     @GET("/3/movie/{id}/videos")
-    Call<ResultTrailer> listTrailers(@Path("id") String type, @Query("api_key") String apiKey);
+    Call<Trailer> listTrailers(@Path("id") String id, @Query("api_key") String apiKey);
 
 }
