@@ -101,7 +101,7 @@ public class RefreshMovies extends IntentService {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org")
+                .baseUrl(Urls.TMDB_BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();

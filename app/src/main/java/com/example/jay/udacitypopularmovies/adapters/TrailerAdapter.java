@@ -2,6 +2,8 @@ package com.example.jay.udacitypopularmovies.adapters;
 
 import android.content.ContentProvider;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.ResultReviews;
 import com.example.jay.udacitypopularmovies.ResultTrailer;
 import com.example.jay.udacitypopularmovies.Trailer;
+import com.example.jay.udacitypopularmovies.Urls;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -48,12 +51,17 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        ResultTrailer trailer = trailers.get(position);
+        final ResultTrailer trailer = trailers.get(position);
         TextView trailerTitle = holder.trailerTitle;
         trailerTitle.setText(trailer.getName());
-        Log.d(TAG, "http://img.youtube.com/vi/" +trailer.getKey() + "/mqdefault.jpg");
-        holder.trailerImage.setImageResource(R.mipmap.ic_launcher);
-        Picasso.with(context).load("http://img.youtube.com/vi/" +trailer.getKey() + "/mqdefault.jpg").into(holder.trailerImage);
+        Picasso.with(context).load(Urls.YOUTUBE_THUMBNAIL_BASE +trailer.getKey() + Urls.YOUTUBE_THUMBNAIL_QUALITY_MED).into(holder.trailerImage);
+
+        holder.trailerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Urls.YOUTUBE_VIDEO_BASE + trailer.getKey())));
+            }
+        });
 
     }
 
