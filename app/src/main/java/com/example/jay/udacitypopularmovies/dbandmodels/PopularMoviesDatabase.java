@@ -1,4 +1,4 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.dbandmodels;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
@@ -11,6 +11,6 @@ import com.raizlabs.android.dbflow.annotation.Database;
 public class PopularMoviesDatabase {
 
     public static final String NAME = "MoviesDatabase";
-    public static final int VERSION = 18;
+    public static final int VERSION = 19;
 
 }

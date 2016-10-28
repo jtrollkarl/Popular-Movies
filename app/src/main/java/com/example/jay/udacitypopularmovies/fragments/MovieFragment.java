@@ -20,9 +20,9 @@ import android.view.ViewGroup;
 
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.RecyclerViewItemDecorator;
-import com.example.jay.udacitypopularmovies.RefreshMovies;
-import com.example.jay.udacitypopularmovies.UILoader;
+import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
+import com.example.jay.udacitypopularmovies.service.RefreshMovies;
+import com.example.jay.udacitypopularmovies.loader.UILoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

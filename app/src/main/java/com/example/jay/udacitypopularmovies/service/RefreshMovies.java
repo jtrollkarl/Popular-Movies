@@ -1,13 +1,17 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.service;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.retrofitservice.PopularMoviesService;
 import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
+import com.example.jay.udacitypopularmovies.dbandmodels.DatabaseStorageRetrieval;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.Page;
+import com.example.jay.udacitypopularmovies.misc.Urls;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.io.IOException;
 import java.util.ArrayList;

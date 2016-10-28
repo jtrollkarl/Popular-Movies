@@ -1,5 +1,5 @@
 
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.dbandmodels;
 
 
 import javax.annotation.Generated;

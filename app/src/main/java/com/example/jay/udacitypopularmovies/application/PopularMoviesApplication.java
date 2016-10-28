@@ -1,7 +1,9 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.application;
 
 import android.app.Application;
 import android.content.Intent;
+
+import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 

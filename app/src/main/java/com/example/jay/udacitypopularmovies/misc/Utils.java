@@ -1,8 +1,8 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.misc;
 
 import android.database.Cursor;
 
-import java.util.ArrayList;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 
 /**
  * Created by Jay on 2016-10-13.

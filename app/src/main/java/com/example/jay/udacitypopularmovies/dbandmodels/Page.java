@@ -1,5 +1,5 @@
 
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.dbandmodels;
 
 import java.util.ArrayList;
 import java.util.List;

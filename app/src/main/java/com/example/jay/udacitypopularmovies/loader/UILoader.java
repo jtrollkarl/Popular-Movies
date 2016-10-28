@@ -1,4 +1,4 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.loader;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,9 +9,11 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie_Table;
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.sql.language.property.DoubleProperty;
 
 
 /**

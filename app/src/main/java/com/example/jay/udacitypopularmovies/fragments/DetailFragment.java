@@ -12,22 +12,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jay.udacitypopularmovies.Favourite;
-import com.example.jay.udacitypopularmovies.Movie;
-import com.example.jay.udacitypopularmovies.PopularMoviesService;
+import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.retrofitservice.PopularMoviesService;
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.ResultReviews;
-import com.example.jay.udacitypopularmovies.ResultTrailer;
-import com.example.jay.udacitypopularmovies.Review;
-import com.example.jay.udacitypopularmovies.Trailer;
+import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
+import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.dbandmodels.Review;
+import com.example.jay.udacitypopularmovies.dbandmodels.Trailer;
 import com.example.jay.udacitypopularmovies.adapters.ReviewAdapter;
 import com.example.jay.udacitypopularmovies.adapters.TrailerAdapter;
 import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
@@ -186,7 +184,7 @@ public class DetailFragment extends Fragment {
     public void update(Movie movie) {
         this.movieCurrent = movie;
     }
-    
+
 
     private void sendTrailerRequest(String id) {
         PopularMoviesService service = retrofit.create(PopularMoviesService.class);

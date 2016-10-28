@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.ResultTrailer;
-import com.example.jay.udacitypopularmovies.Urls;
+import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.misc.Urls;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

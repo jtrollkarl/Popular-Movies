@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.jay.udacitypopularmovies.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.Utils;
+import com.example.jay.udacitypopularmovies.misc.Utils;
 import com.squareup.picasso.Picasso;
 
 /**

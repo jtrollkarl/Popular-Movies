@@ -1,10 +1,11 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.dbandmodels;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.loader.UILoader;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;

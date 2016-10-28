@@ -1,4 +1,4 @@
-package com.example.jay.udacitypopularmovies;
+package com.example.jay.udacitypopularmovies.misc;
 
 /**
  * Created by Jay on 2016-10-27.

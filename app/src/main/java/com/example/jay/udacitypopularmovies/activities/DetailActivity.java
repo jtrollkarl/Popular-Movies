@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.example.jay.udacitypopularmovies.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.fragments.DetailFragment;
 
