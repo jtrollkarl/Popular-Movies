@@ -24,7 +24,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
 
     private ArrayList<ResultTrailer> trailers = new ArrayList<ResultTrailer>();
     private Context context;
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     private static final String TAG = TrailerAdapter.class.getSimpleName();
 
     public TrailerAdapter(Context context) {
@@ -34,8 +34,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.trailer_row, parent, false);
-            return new MovieViewHolder(v);
+        View v = inflater.inflate(R.layout.trailer_row, parent, false);
+        return new MovieViewHolder(v);
     }
 
     public void setTrailers(ArrayList<ResultTrailer> trailers){

@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jay.udacitypopularmovies.MovieAdapter;
+import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.RefreshMovies;
@@ -86,7 +86,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId() ==  R.id.menuSortPopularity) {
-            //SORT_METHOD = R.id.menuSortPopularity;
             Intent popularIntent = new Intent(getActivity(), RefreshMovies.class);
             popularIntent.setAction(RefreshMovies.ACTION_SWITCH_POPULAR);
             getActivity().startService(popularIntent);
@@ -95,7 +94,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
             return true;
         }
         else if(item.getItemId() == R.id.menuSortRating){
-            //SORT_METHOD = R.id.menuSortRating;
             Intent topRatedIntent = new Intent(getActivity(), RefreshMovies.class);
             topRatedIntent.setAction(RefreshMovies.ACTION_SWTICH_TOP_RATED);
             getActivity().startService(topRatedIntent);
@@ -106,7 +104,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         else if(item.getItemId() == R.id.menuSortFavourites){
             getActivity().getSupportLoaderManager().initLoader(3, null, this);
             refreshLoader(3);
-            //SORT_METHOD = R.id.menuSortFavourites;
             return true;
 
         }
@@ -130,7 +127,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         Log.d(TAG, "Load finished");
-        //Log.d(TAG, cursor.getString(cursor.getColumnIndexOrThrow("title")));
         adapter.swapCursor(cursor);
     }
 

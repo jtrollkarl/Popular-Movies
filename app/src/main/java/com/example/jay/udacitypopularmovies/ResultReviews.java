@@ -26,121 +26,76 @@ public class ResultReviews {
     private String url;
 
     /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public ResultReviews() {
-    }
-
-    /**
-     * 
-     * @param content
-     * @param id
-     * @param author
-     * @param url
-     */
-    public ResultReviews(String id, String author, String content, String url) {
-        this.id = id;
-        this.author = author;
-        this.content = content;
-        this.url = url;
-    }
-
-    /**
-     * 
+     *
      * @return
-     *     The id
+     * The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     * 
+     *
      * @param id
-     *     The id
+     * The id
      */
     public void setId(String id) {
         this.id = id;
     }
 
-    public ResultReviews withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     /**
-     * 
+     *
      * @return
-     *     The author
+     * The author
      */
     public String getAuthor() {
         return author;
     }
 
     /**
-     * 
+     *
      * @param author
-     *     The author
+     * The author
      */
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public ResultReviews withAuthor(String author) {
-        this.author = author;
-        return this;
-    }
-
     /**
-     * 
+     *
      * @return
-     *     The content
+     * The content
      */
     public String getContent() {
         return content;
     }
 
     /**
-     * 
+     *
      * @param content
-     *     The content
+     * The content
      */
     public void setContent(String content) {
         this.content = content;
     }
 
-    public ResultReviews withContent(String content) {
-        this.content = content;
-        return this;
-    }
-
     /**
-     * 
+     *
      * @return
-     *     The url
+     * The url
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     * 
+     *
      * @param url
-     *     The url
+     * The url
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public ResultReviews withUrl(String url) {
-        this.url = url;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
 }

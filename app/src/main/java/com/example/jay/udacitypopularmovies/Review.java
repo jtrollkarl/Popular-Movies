@@ -14,161 +14,108 @@ public class Review {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("page")
     @Expose
-    private Integer page;
-    @SerializedName("resultReviewses")
+    private int page;
+    @SerializedName("results")
     @Expose
-    private List<ResultReviews> resultReviewses = new ArrayList<ResultReviews>();
+    private List<ResultReviews> results = new ArrayList<ResultReviews>();
     @SerializedName("total_pages")
     @Expose
-    private Integer totalPages;
+    private int totalPages;
     @SerializedName("total_results")
     @Expose
-    private Integer totalResults;
+    private int totalResults;
 
     /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Review() {
-    }
-
-    /**
-     * 
-     * @param id
-     * @param resultReviewses
-     * @param totalResults
-     * @param page
-     * @param totalPages
-     */
-    public Review(Integer id, Integer page, List<ResultReviews> resultReviewses, Integer totalPages, Integer totalResults) {
-        this.id = id;
-        this.page = page;
-        this.resultReviewses = resultReviewses;
-        this.totalPages = totalPages;
-        this.totalResults = totalResults;
-    }
-
-    /**
-     * 
+     *
      * @return
-     *     The id
+     * The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
     /**
-     * 
+     *
      * @param id
-     *     The id
+     * The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public Review withId(Integer id) {
-        this.id = id;
-        return this;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The page
+     * The page
      */
-    public Integer getPage() {
+    public int getPage() {
         return page;
     }
 
     /**
-     * 
+     *
      * @param page
-     *     The page
+     * The page
      */
-    public void setPage(Integer page) {
+    public void setPage(int page) {
         this.page = page;
     }
 
-    public Review withPage(Integer page) {
-        this.page = page;
-        return this;
-    }
-
     /**
-     * 
+     *
      * @return
-     *     The resultReviewses
+     * The results
      */
-    public List<ResultReviews> getResult() {
-        return resultReviewses;
+    public List<ResultReviews> getResults() {
+        return results;
     }
 
     /**
-     * 
-     * @param resultReviewses
-     *     The resultReviewses
+     *
+     * @param results
+     * The results
      */
-    public void setResultReviewses(List<ResultReviews> resultReviewses) {
-        this.resultReviewses = resultReviewses;
-    }
-
-    public Review withResults(List<ResultReviews> resultReviewses) {
-        this.resultReviewses = resultReviewses;
-        return this;
+    public void setResults(List<ResultReviews> results) {
+        this.results = results;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The totalPages
+     * The totalPages
      */
-    public Integer getTotalPages() {
+    public int getTotalPages() {
         return totalPages;
     }
 
     /**
-     * 
+     *
      * @param totalPages
-     *     The total_pages
+     * The total_pages
      */
-    public void setTotalPages(Integer totalPages) {
+    public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
-    }
-
-    public Review withTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-        return this;
     }
 
     /**
-     * 
+     *
      * @return
-     *     The totalResults
+     * The totalResults
      */
-    public Integer getTotalResults() {
+    public int getTotalResults() {
         return totalResults;
     }
 
     /**
-     * 
+     *
      * @param totalResults
-     *     The total_results
+     * The total_results
      */
-    public void setTotalResults(Integer totalResults) {
+    public void setTotalResults(int totalResults) {
         this.totalResults = totalResults;
-    }
-
-    public Review withTotalResults(Integer totalResults) {
-        this.totalResults = totalResults;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 
 }

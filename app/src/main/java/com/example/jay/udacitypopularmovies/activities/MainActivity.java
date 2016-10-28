@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import com.example.jay.udacitypopularmovies.Movie;
-import com.example.jay.udacitypopularmovies.MovieAdapter;
+import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.fragments.DetailFragment;
 import com.example.jay.udacitypopularmovies.R;
 
