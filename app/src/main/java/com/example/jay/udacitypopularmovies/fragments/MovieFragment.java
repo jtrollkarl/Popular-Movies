@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.dbandmodels.Trailer;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.example.jay.udacitypopularmovies.loader.UILoader;
@@ -36,7 +37,8 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     public static final String TAG = MovieFragment.class.getSimpleName();
     @BindView(R.id.movie_recycler) RecyclerView recyclerView;
     private MovieAdapter adapter;
-    public static int CURRENT_LOADER;
+    private static int CURRENT_LOADER;
+    private static final String LOADER_KEY = "LOADER_KEY";
 
     public MovieFragment() {
         // Required empty public constructor
@@ -46,6 +48,13 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null || !savedInstanceState.containsKey(LOADER_KEY)){
+            Log.d(TAG, "No saved instance state. Loading default loader");
+            CURRENT_LOADER = 1;
+        }else{
+            Log.d(TAG, "Loading saved loader id: " + CURRENT_LOADER);
+            CURRENT_LOADER = savedInstanceState.getInt(LOADER_KEY);
+        }
     }
 
     @Override
@@ -70,10 +79,15 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         recyclerView.addItemDecoration(new RecyclerViewItemDecorator(10));
         recyclerView.setAdapter(adapter);
 
-        CURRENT_LOADER = 1;
-        getActivity().getSupportLoaderManager().initLoader(1, null, this);
+        getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LOADER_KEY, CURRENT_LOADER);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

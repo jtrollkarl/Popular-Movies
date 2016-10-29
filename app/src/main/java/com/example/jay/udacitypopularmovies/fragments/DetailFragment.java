@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.misc.Urls;
 import com.example.jay.udacitypopularmovies.retrofitservice.PopularMoviesService;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
@@ -50,6 +51,7 @@ public class DetailFragment extends Fragment {
 
 
     public static final String TAG = DetailFragment.class.getSimpleName();
+    private static final String MOVIE_KEY = "MOVIE_KEY";
     @BindView(R.id.poster)
     ImageView poster;
     @BindView(R.id.toolbar)
@@ -90,6 +92,11 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "onCreateView");
@@ -101,7 +108,7 @@ public class DetailFragment extends Fragment {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org")
+                .baseUrl(Urls.TMDB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -126,6 +133,12 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, String.valueOf(movieCurrent == null));
         Log.d(TAG, String.valueOf(view == null));
         Log.d(TAG, "onViewCreated");
+        if(savedInstanceState == null || !savedInstanceState.containsKey(MOVIE_KEY)){
+            //do nothing
+        }else{
+            movieCurrent = savedInstanceState.getParcelable(MOVIE_KEY);
+        }
+
         if (view != null && movieCurrent != null) {
             loadMovie(movieCurrent);
         }
@@ -143,11 +156,11 @@ public class DetailFragment extends Fragment {
 
         Log.d(TAG, "loadMovie called");
         Picasso.with(getActivity())
-                .load("http://image.tmdb.org/t/p/w500//" + movie.getBackdropPath())
+                .load(Urls.TMDB_BACKDROP_IMG_URL + movie.getBackdropPath())
                 .into(poster);
 
         Picasso.with(getActivity())
-                .load("http://image.tmdb.org/t/p/w185//" + movie.getPosterPath())
+                .load(Urls.TMDB_POSTER_IMG_URL + movie.getPosterPath())
                 .into(detailMovie);
 
         sendTrailerRequest(String.valueOf(movie.getId()));
@@ -179,6 +192,14 @@ public class DetailFragment extends Fragment {
                 Toast.makeText(getContext(), movieCurrent.getTitle() + " added to favourites", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(movieCurrent != null){
+            outState.putParcelable(MOVIE_KEY, movieCurrent);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     public void update(Movie movie) {

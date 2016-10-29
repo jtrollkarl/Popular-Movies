@@ -60,41 +60,6 @@ public class RefreshMovies extends IntentService {
     }
 
 
-    private void handleRefresh(String action) {
-        Log.d(TAG, "Starting app");
-
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        PopularMoviesService service = retrofit.create(PopularMoviesService.class);
-        Call<Page> movies = service.listMovies(action, MovieApiKey.ApiKey);
-        Log.d(TAG, "Request is: " + movies.request().url());
-
-
-        try {
-            Response<Page> response = movies.execute();
-            if(response.errorBody() != null){
-                Log.d(TAG, response.errorBody().string());
-            }
-            ArrayList<Movie> listofmovies = (ArrayList<Movie>) response.body().getResults();
-
-            DatabaseStorageRetrieval.insert(this, listofmovies);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void handleMoviesAsync(String action){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
