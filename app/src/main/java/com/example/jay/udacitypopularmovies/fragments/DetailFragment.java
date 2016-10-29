@@ -2,6 +2,7 @@ package com.example.jay.udacitypopularmovies.fragments;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -35,6 +36,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -166,30 +168,21 @@ public class DetailFragment extends Fragment {
         sendTrailerRequest(String.valueOf(movie.getId()));
         sendReviewRequest(String.valueOf(movie.getId()));
 
+
         fabFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Favourite fav = new Favourite();
-                fav.setId(movieCurrent.getId());
-                fav.setBackdropPath(movieCurrent.getBackdropPath());
-                fav.setPopularity(movieCurrent.getPopularity());
-                fav.setVoteCount(movieCurrent.getVoteCount());
-                fav.setVoteAverage(movieCurrent.getVoteAverage());
-                fav.setAdult(movieCurrent.isAdult());
-                fav.setOverview(movieCurrent.getOverview());
-                fav.setOriginalLanguage(movieCurrent.getOriginalLanguage());
-                fav.setPosterPath(movieCurrent.getPosterPath());
-                fav.setOriginalTitle(movieCurrent.getOriginalTitle());
-                fav.setReleaseDate(movieCurrent.getReleaseDate());
-                fav.setTitle(movieCurrent.getTitle());
-                if (fav.exists()) {
-                    Toast.makeText(getContext(), movieCurrent.getTitle() + " removed from favourites", Toast.LENGTH_SHORT).show();
-                    fav.delete();
-                    return;
+                try {
+                    if(!new insertFavourite().execute(movieCurrent).get()){
+                        Toast.makeText(getActivity(), movieCurrent.getTitle() + " removed from favourites", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), movieCurrent.getTitle() + " added to favourites", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
                 }
-                fav.insert();
-                fav.save();
-                Toast.makeText(getContext(), movieCurrent.getTitle() + " added to favourites", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -249,6 +242,36 @@ public class DetailFragment extends Fragment {
 
             }
         });
+    }
+
+    public class insertFavourite extends AsyncTask<Movie, Void, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Movie... params) {
+            Favourite fav = new Favourite();
+
+            fav.setId(movieCurrent.getId());
+            fav.setBackdropPath(movieCurrent.getBackdropPath());
+            fav.setPopularity(movieCurrent.getPopularity());
+            fav.setVoteCount(movieCurrent.getVoteCount());
+            fav.setVoteAverage(movieCurrent.getVoteAverage());
+            fav.setAdult(movieCurrent.isAdult());
+            fav.setOverview(movieCurrent.getOverview());
+            fav.setOriginalLanguage(movieCurrent.getOriginalLanguage());
+            fav.setPosterPath(movieCurrent.getPosterPath());
+            fav.setOriginalTitle(movieCurrent.getOriginalTitle());
+            fav.setReleaseDate(movieCurrent.getReleaseDate());
+            fav.setTitle(movieCurrent.getTitle());
+            if (fav.exists()) {
+                fav.delete();
+                return false;
+            }
+            fav.insert();
+            fav.save();
+
+            return true;
+
+        }
     }
 
 }
