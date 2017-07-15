@@ -68,22 +68,8 @@ public class UILoader extends AsyncTaskLoader<Cursor> {
 
         }
 
-/*        if(PROPERTY == null){
-            PROPERTY = Movie_Table.popularity;
-        }
-
-        FlowCursorList<Movie> list = SQLite.select()
-                .from(Movie.class)
-                .where()
-                .orderBy(PROPERTY, false)
-                .cursorList();
-
-        //list.close();
-        //loader handles the closing of the cursor?
-        return list.cursor();*/
         return null;
     }
-
 
 
     @Override

@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:text="Trailers"
                         style="@style/TextAppearance.AppCompat.Title"/>
-                    
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/trailer_recycler"
                         android:layout_width="wrap_content"
