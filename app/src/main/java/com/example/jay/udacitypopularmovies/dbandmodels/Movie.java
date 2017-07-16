@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Generated;
 import javax.validation.Valid;
 
 import com.google.gson.annotations.Expose;
@@ -19,7 +18,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Table(database = PopularMoviesDatabase.class, cachingEnabled = true)
-@Generated("org.jsonschema2pojo")
 public class Movie extends BaseModel implements Parcelable {
 
 
