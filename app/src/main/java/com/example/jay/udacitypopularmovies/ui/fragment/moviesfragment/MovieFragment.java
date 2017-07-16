@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -17,12 +18,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.example.jay.udacitypopularmovies.loader.UILoader;
+import com.hannesdorfmann.mosby3.mvp.MvpFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +38,10 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
+        MovieFragmentContract.Actions>
+        implements MovieFragmentContract.View,
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String TAG = MovieFragment.class.getSimpleName();
     @BindView(R.id.movie_recycler) RecyclerView recyclerView;
@@ -43,6 +52,11 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
     public MovieFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public MovieFragmentContract.Actions createPresenter() {
+        return null;
     }
 
 
@@ -159,8 +173,34 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.fetchMovies();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void showMovies(List<Movie> movies) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int resId) {
+        Toast.makeText(this.getActivity(), resId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showNotLoading() {
+
     }
 }

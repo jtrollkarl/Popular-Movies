@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ import com.example.jay.udacitypopularmovies.adapters.TrailerAdapter;
 import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,14 +48,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class DetailFragment extends Fragment {
+
+public class DetailFragment extends MvpFragment<DetailsFragmentContract.View, DetailsFragmentContract.Actions> implements DetailsFragmentContract.View {
 
 
     public static final String TAG = DetailFragment.class.getSimpleName();
     public static final String MOVIE_KEY = "MOVIE_KEY";
+
     @BindView(R.id.poster)
     ImageView poster;
     @BindView(R.id.toolbar)
@@ -91,6 +92,11 @@ public class DetailFragment extends Fragment {
 
     public DetailFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public DetailsFragmentContract.Actions createPresenter() {
+        return null;
     }
 
     @Override
@@ -242,6 +248,16 @@ public class DetailFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void showMovieDetails(Movie movie) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int resId) {
+        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
     }
 
     public class insertFavourite extends AsyncTask<Movie, Void, Boolean>{

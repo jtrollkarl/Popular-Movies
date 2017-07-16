@@ -17,12 +17,6 @@ import com.example.jay.udacitypopularmovies.ui.activity.detail.DetailActivity;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieSelectedListener{
 
-    /**
-     * Use a background thread (intent service) to fill the db. Then use a cursor loader
-     * to load the ui based on the query given by the user (whether the list is sorted by
-     * top rated or most popular).
-     */
-
     private static final String TAG = MainActivity.class.getSimpleName();
     private boolean mTwoPane;
 
