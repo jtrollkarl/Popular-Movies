@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.jay.udacitypopularmovies.Injector;
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
@@ -50,13 +51,9 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     private static final String LOADER_KEY = "LOADER_KEY";
     private Unbinder unbinder;
 
-    public MovieFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public MovieFragmentContract.Actions createPresenter() {
-        return null;
+        return new MoviesFragmentPresenter(Injector.provideMoviesService(), Injector.provideDatabaseService());
     }
 
 
@@ -186,6 +183,11 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     @Override
     public void showMovies(List<Movie> movies) {
+
+    }
+
+    @Override
+    public void showMovieDetails(Movie movie) {
 
     }
 

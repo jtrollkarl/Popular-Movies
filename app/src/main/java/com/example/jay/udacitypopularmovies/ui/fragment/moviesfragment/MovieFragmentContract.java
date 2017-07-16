@@ -14,17 +14,30 @@ import java.util.List;
 
 public interface MovieFragmentContract {
 
-    interface View extends MvpView{
+    interface View extends MvpView {
         void showMovies(List<Movie> movies);
+
+        void showMovieDetails(Movie movie);
+
         void showMessage(@StringRes int resId);
+
         void showLoading();
+
         void showNotLoading();
 
     }
 
-    interface Actions extends MvpPresenter<View>{
+    interface Actions extends MvpPresenter<View> {
         void fetchMovies();
+
         void fetchMovies(int pageNumber);
+
         void onClickMovie(Movie movie);
+
+        void onClickSortPopular();
+
+        void onClickSortTopRated();
+
+        void onClickSortFavourites();
     }
 }

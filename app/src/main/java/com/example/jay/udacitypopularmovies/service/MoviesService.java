@@ -12,6 +12,8 @@ import io.reactivex.Observable;
 
 public interface MoviesService {
 
+    Observable<List<Movie>> fetchMovies();
+
     Observable<List<Movie>> fetchMovies(int pageNumber);
 
 }

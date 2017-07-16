@@ -24,7 +24,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void fetchMovies() {
-
+        moviesService.fetchMovies();
     }
 
     @Override
@@ -34,8 +34,24 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void onClickMovie(Movie movie) {
+        if(isViewAttached()){
+
+        }
+    }
+
+    @Override
+    public void onClickSortPopular() {
 
     }
 
+    @Override
+    public void onClickSortTopRated() {
+
+    }
+
+    @Override
+    public void onClickSortFavourites() {
+
+    }
 
 }

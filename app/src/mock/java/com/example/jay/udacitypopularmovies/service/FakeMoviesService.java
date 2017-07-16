@@ -12,6 +12,11 @@ import io.reactivex.Observable;
 
 public class FakeMoviesService implements MoviesService {
     @Override
+    public Observable<List<Movie>> fetchMovies() {
+        return null;
+    }
+
+    @Override
     public Observable<List<Movie>> fetchMovies(int pageNumber) {
         return null;
     }
