@@ -27,6 +27,7 @@ import com.example.jay.udacitypopularmovies.loader.UILoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -39,6 +40,7 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     private MovieAdapter adapter;
     private static int CURRENT_LOADER;
     private static final String LOADER_KEY = "LOADER_KEY";
+    private Unbinder unbinder;
 
     public MovieFragment() {
         // Required empty public constructor
@@ -59,7 +61,6 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_movie, container, false);
     }
@@ -68,10 +69,9 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-        //layout manager
+        unbinder = ButterKnife.bind(this, view);
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        //end layoutmanager
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -157,8 +157,11 @@ public class MovieFragment extends Fragment implements LoaderManager.LoaderCallb
         }else{
             //Do nothing
         }
-
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

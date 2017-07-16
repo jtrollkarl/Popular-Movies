@@ -2,6 +2,7 @@ package com.example.jay.udacitypopularmovies.activities;
 
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.fragments.DetailFragment;
 import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.fragments.MovieFragment;
 
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieSelectedListener{
@@ -23,17 +25,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private static final String TAG = MainActivity.class.getSimpleName();
     private boolean mTwoPane;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadMoviesFragment();
 
-        if(findViewById(R.id.details_container) != null){
-            mTwoPane = true;
-        }else{
-            mTwoPane = false;
-        }
+        mTwoPane = findViewById(R.id.details_container) != null;
+    }
+
+    private void loadMoviesFragment(){
+        Fragment moviesFragment = new MovieFragment();
+        FragmentTransaction moviesTransaction = getSupportFragmentManager().beginTransaction();
+        moviesTransaction.replace(R.id.container_movies, moviesFragment);
+        moviesTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        moviesTransaction.commit();
     }
 
     @Override
@@ -42,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         if(!mTwoPane){
             Log.d(TAG, "detail_container id not found");
             Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
-            //add extra data to intent
             detailIntent.putExtra("movie", movie);
-            //start intent
             startActivity(detailIntent);
         }else{
             Log.d(TAG, "detail_container id found");

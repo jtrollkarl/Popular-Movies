@@ -31,8 +31,8 @@ public class DetailActivity extends AppCompatActivity  {
         Log.d(TAG, movie.getOriginalTitle());
         detailFragment.loadMovie(movie);
 
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapsingToolbarLayout =  findViewById(R.id.collapsingToolbar);
+        toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);

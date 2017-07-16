@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.loader.UILoader;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
@@ -20,24 +21,17 @@ public class DatabaseStorageRetrieval {
 
     private static final String TAG = DatabaseStorageRetrieval.class.getSimpleName();
 
-
-
     public static void insert(final Context context, final ArrayList<Movie> movies){
 
         FlowManager.getDatabase(PopularMoviesDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<Movie>() {
                             @Override
-                            public void processModel(Movie movie) {
-                                // do work here -- i.e. user.delete() or user.update()
-                                //Log.d(TAG, String.valueOf(movie.getId()));
-                                //movie.insert();
-
+                            public void processModel(Movie movie, DatabaseWrapper wrapper) {
                                 movie.update();
                                 movie.save();
-                                //Log.d(TAG, "Inserting movie");
-
                             }
+
                         }).addAll(movies).build())  // add elements (can also handle multiple)
                 .error(new Transaction.Error() {
                     @Override
@@ -54,9 +48,7 @@ public class DatabaseStorageRetrieval {
                         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     }
                 }).build().execute();
-
-
-    }//end insert
+    }
 
 
 
