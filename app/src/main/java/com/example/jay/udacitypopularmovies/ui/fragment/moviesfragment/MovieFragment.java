@@ -1,4 +1,4 @@
-package com.example.jay.udacitypopularmovies.fragments;
+package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 
 
 import android.content.Intent;
@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.Trailer;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.example.jay.udacitypopularmovies.loader.UILoader;

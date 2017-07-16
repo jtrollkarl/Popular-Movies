@@ -1,4 +1,4 @@
-package com.example.jay.udacitypopularmovies.fragments;
+package com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment;
 
 
 import android.content.Context;
@@ -53,7 +53,7 @@ public class DetailFragment extends Fragment {
 
 
     public static final String TAG = DetailFragment.class.getSimpleName();
-    private static final String MOVIE_KEY = "MOVIE_KEY";
+    public static final String MOVIE_KEY = "MOVIE_KEY";
     @BindView(R.id.poster)
     ImageView poster;
     @BindView(R.id.toolbar)

@@ -8,12 +8,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="?android:attr/dividerHorizontal"
-    tools:context="com.example.jay.udacitypopularmovies.activities.MainActivity">
+    tools:context="com.example.jay.udacitypopularmovies.ui.activity.mainactivity.MainActivity">
 
 
     <fragment
         android:id="@+id/fragment_movies"
-        class="com.example.jay.udacitypopularmovies.fragments.MovieFragment"
+        class="com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment.MovieFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -21,7 +21,7 @@
 
     <FrameLayout
         android:id="@+id/details_container"
-        class="com.example.jay.udacitypopularmovies.fragments.DetailFragment"
+        class="com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment.DetailFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2">
