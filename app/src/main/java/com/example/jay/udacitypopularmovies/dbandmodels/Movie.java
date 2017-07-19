@@ -461,6 +461,30 @@ public class Movie extends BaseModel implements Parcelable {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    public static List<Movie> getFakes(int requestedSize){
+        List<Movie> movies = new ArrayList<>();
+        for (int i = 0; i < requestedSize; i++){
+
+            movies.add(new Movie(
+                    "posterPathTest",
+                    true,
+                    "overViewTest",
+                    "99/99/99",
+                    null,
+                    i,
+                    "originalTitleTest " + Integer.toString(i),
+                    "originalLanguageTest",
+                    "titleTest" + Integer.toString(i),
+                    "backdropPathTest",
+                    (double) i,
+                    99,
+                    false,
+                    (double) i
+                    ));
+        }
+        return movies;
+    }
+
     @Override
     public int describeContents() {
         return 0;

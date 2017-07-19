@@ -5,6 +5,7 @@ import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by Jay on 2017-07-16.
@@ -12,8 +13,8 @@ import io.reactivex.Observable;
 
 public interface MoviesService {
 
-    Observable<List<Movie>> fetchMovies();
+    Single<List<Movie>> fetchMovies();
 
-    Observable<List<Movie>> fetchMovies(int pageNumber);
+    Single<List<Movie>> fetchMoviesPage(int pageNumber);
 
 }

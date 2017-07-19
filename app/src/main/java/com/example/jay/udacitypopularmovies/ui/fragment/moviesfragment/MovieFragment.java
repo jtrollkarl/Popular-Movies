@@ -25,6 +25,7 @@ import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
+import com.example.jay.udacitypopularmovies.schedulers.SchedulerProvider;
 import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.example.jay.udacitypopularmovies.loader.UILoader;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
@@ -36,9 +37,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         MovieFragmentContract.Actions>
         implements MovieFragmentContract.View,
@@ -53,9 +51,14 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     @Override
     public MovieFragmentContract.Actions createPresenter() {
-        return new MoviesFragmentPresenter(Injector.provideMoviesService(), Injector.provideDatabaseService());
+        return new MoviesFragmentPresenter(Injector.provideMoviesService(), Injector.provideDatabaseService(), new SchedulerProvider());
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,7 +92,7 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         recyclerView.addItemDecoration(new RecyclerViewItemDecorator(10));
         recyclerView.setAdapter(adapter);
 
-        getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
+        showMovies();
     }
 
 
@@ -170,20 +173,8 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        presenter.fetchMovies();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void showMovies(List<Movie> movies) {
-
+    public void showMovies() {
+        getActivity().getLoaderManager().getLoader(CURRENT_LOADER).forceLoad();
     }
 
     @Override
@@ -204,5 +195,28 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     @Override
     public void showNotLoading() {
 
+    }
+
+    @Override
+    public void showMovieFetchError() {
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.fetchMovies();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

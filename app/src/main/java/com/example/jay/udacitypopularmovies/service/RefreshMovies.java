@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.retrofitservice.PopularMoviesService;
 import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
-import com.example.jay.udacitypopularmovies.dbandmodels.DatabaseStorageRetrieval;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.dbandmodels.Page;
 import com.example.jay.udacitypopularmovies.misc.Urls;
@@ -93,7 +92,7 @@ public class RefreshMovies extends IntentService {
                         }
                     }
                     ArrayList<Movie> listofmovies = (ArrayList<Movie>) response.body().getResults();
-                    DatabaseStorageRetrieval.insert(RefreshMovies.this, listofmovies);
+
                 }else{
                     //somerhing went wrong
                 }

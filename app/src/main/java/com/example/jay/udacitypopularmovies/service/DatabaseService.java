@@ -6,15 +6,17 @@ import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 /**
  * Created by Jay on 2017-07-16.
  */
 
 public interface DatabaseService {
 
-    void insertMovie(Movie movie);
+    Completable insertMovie(Movie movie);
 
-    void insertMovies(List<Movie> movies);
+    Completable insertMovies(List<Movie> movies);
 
     void deleteMovie(Movie movie);
 

@@ -8,6 +8,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 import java.util.List;
 
+
 /**
  * Created by Jay on 2017-07-16.
  */
@@ -15,7 +16,7 @@ import java.util.List;
 public interface MovieFragmentContract {
 
     interface View extends MvpView {
-        void showMovies(List<Movie> movies);
+        void showMovies();
 
         void showMovieDetails(Movie movie);
 
@@ -25,12 +26,18 @@ public interface MovieFragmentContract {
 
         void showNotLoading();
 
+        void showMovieFetchError();
+
     }
 
     interface Actions extends MvpPresenter<View> {
         void fetchMovies();
 
         void fetchMovies(int pageNumber);
+
+        void insertMovies(List<Movie> movies);
+
+        void onPause();
 
         void onClickMovie(Movie movie);
 
