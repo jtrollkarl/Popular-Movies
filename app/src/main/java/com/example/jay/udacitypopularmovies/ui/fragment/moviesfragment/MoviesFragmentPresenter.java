@@ -41,46 +41,61 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
         disposables.add(moviesService.fetchMovies()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-        .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
-            @Override
-            public void onSuccess(@NonNull List<Movie> movies) {
-                insertMovies(movies);
-            }
+                .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
+                    @Override
+                    public void onSuccess(@NonNull List<Movie> movies) {
+                        insertMovies(movies);
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                if(isViewAttached()){
-                    getView().showMessage(R.string.error_fetch_movies);
-                }
-            }
-        }));
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        if (isViewAttached()) {
+                            getView().showMessage(R.string.error_fetch_movies);
+                        }
+                    }
+                }));
     }
 
     @Override
     public void fetchMovies(int pageNumber) {
+        disposables.add(moviesService.fetchMoviesPage(pageNumber)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
+                    @Override
+                    public void onSuccess(@NonNull List<Movie> movies) {
+                        insertMovies(movies);
+                    }
 
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        if (isViewAttached()){
+                            getView().showMessage(R.string.error_fetch_movies);
+                        }
+                    }
+                }));
     }
 
     @Override
     public void insertMovies(List<Movie> movies) {
         disposables.add(databaseService.insertMovies(movies)
-        .subscribeOn(schedulerProvider.io())
-        .observeOn(schedulerProvider.ui())
-        .subscribeWith(new DisposableCompletableObserver() {
-            @Override
-            public void onComplete() {
-                if(isViewAttached()){
-                    getView().showMovies();
-                }
-            }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        if (isViewAttached()) {
+                            getView().showMovies();
+                        }
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                if(isViewAttached()){
-                    getView().showMessage(R.string.error_insert_movies);
-                }
-            }
-        }));
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        if (isViewAttached()) {
+                            getView().showMessage(R.string.error_insert_movies);
+                        }
+                    }
+                }));
     }
 
     @Override
@@ -90,7 +105,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void onClickMovie(Movie movie) {
-        if(isViewAttached()){
+        if (isViewAttached()) {
             getView().showMovieDetails(movie);
         }
     }

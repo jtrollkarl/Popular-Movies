@@ -22,6 +22,7 @@ import io.reactivex.observers.TestObserver;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -74,7 +75,19 @@ public class MoviesFragmentPresenterTest {
     }
 
     @Test
-    public void fetchMovies_DATABASE_ERROR() throws Exception{
+    public void fetchMovies_PAGE_SUCCESS() throws Exception {
+        List<Movie> fakes = Movie.getFakes(5);
+
+        when(moviesService.fetchMoviesPage(anyInt())).thenReturn(Single.just(fakes));
+        when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
+
+        presenter.fetchMovies(5);
+
+        verify(view, times(1)).showMovies();
+    }
+
+    @Test
+    public void fetchMovies_DATABASE_ERROR() throws Exception {
         List<Movie> fakes = Movie.getFakes(5);
 
         when(moviesService.fetchMovies()).thenReturn(Single.just(fakes));

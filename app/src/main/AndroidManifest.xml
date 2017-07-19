@@ -22,9 +22,6 @@
 
             </activity>
 
-        <service
-            android:name=".service.RefreshMovies"
-            android:exported="false"></service>
     </application>
 
 </manifest>

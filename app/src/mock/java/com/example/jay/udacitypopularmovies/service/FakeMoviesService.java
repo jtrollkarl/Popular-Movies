@@ -23,7 +23,6 @@ public class FakeMoviesService implements MoviesService {
                 // TODO: 2017-07-18 write some fake data here
                 observer.onSuccess(new ArrayList<Movie>() {
                 });
-
             }
         };
     }

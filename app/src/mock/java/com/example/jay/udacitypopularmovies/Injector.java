@@ -1,7 +1,7 @@
 package com.example.jay.udacitypopularmovies;
 
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
-import com.example.jay.udacitypopularmovies.service.FakeDatabaseService;
+import com.example.jay.udacitypopularmovies.service.DatabaseServiceImpl;
 import com.example.jay.udacitypopularmovies.service.FakeMoviesService;
 import com.example.jay.udacitypopularmovies.service.MoviesService;
 
@@ -16,7 +16,7 @@ public class Injector {
     }
 
     public static DatabaseService provideDatabaseService(){
-        return new FakeDatabaseService();
+        return new DatabaseServiceImpl();
     }
 
 }

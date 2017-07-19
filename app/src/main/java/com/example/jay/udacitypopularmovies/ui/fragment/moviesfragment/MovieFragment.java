@@ -1,12 +1,10 @@
 package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,11 +24,8 @@ import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.schedulers.SchedulerProvider;
-import com.example.jay.udacitypopularmovies.service.RefreshMovies;
 import com.example.jay.udacitypopularmovies.loader.UILoader;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,24 +108,15 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId() ==  R.id.menuSortPopularity) {
-            Intent popularIntent = new Intent(getActivity(), RefreshMovies.class);
-            popularIntent.setAction(RefreshMovies.ACTION_SWITCH_POPULAR);
-            getActivity().startService(popularIntent);
-            getActivity().getSupportLoaderManager().initLoader(1, null, this);
-            refreshLoader(1);
+            presenter.onClickSortPopular();
             return true;
         }
         else if(item.getItemId() == R.id.menuSortRating){
-            Intent topRatedIntent = new Intent(getActivity(), RefreshMovies.class);
-            topRatedIntent.setAction(RefreshMovies.ACTION_SWTICH_TOP_RATED);
-            getActivity().startService(topRatedIntent);
-            getActivity().getSupportLoaderManager().initLoader(2, null, this);
-            refreshLoader(2);
+            presenter.onClickSortTopRated();
             return true;
         }
         else if(item.getItemId() == R.id.menuSortFavourites){
-            getActivity().getSupportLoaderManager().initLoader(3, null, this);
-            refreshLoader(3);
+            presenter.onClickSortFavourites();
             return true;
 
         }

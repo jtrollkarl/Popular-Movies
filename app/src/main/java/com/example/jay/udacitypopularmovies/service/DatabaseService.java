@@ -18,9 +18,8 @@ public interface DatabaseService {
 
     Completable insertMovies(List<Movie> movies);
 
-    void deleteMovie(Movie movie);
+    Completable deleteMovie(Movie movie);
 
-    void saveFavourite(Movie movie);
+    Completable saveFavourite(Movie movie);
 
-    Cursor fetchMovies();
 }
