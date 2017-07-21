@@ -1,12 +1,8 @@
 package com.example.jay.udacitypopularmovies.loader;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
@@ -20,15 +16,15 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
  * Created by Jay on 2016-10-09.
  */
 
-public class UILoader extends AsyncTaskLoader<Cursor> {
+public class MovieLoader extends AsyncTaskLoader<Cursor> {
 
-    public static final String ACTION_FORCE = UILoader.class.getSimpleName() + ":FORCE_LOAD";
+    public static final String ACTION_FORCE = MovieLoader.class.getSimpleName() + ":FORCE_LOAD";
     public static final int LOADER_ID_POPULAR = 1;
     public static final int LOADER_ID_TOP_RATED = 2;
     public static final int LOADER_ID_FAVOURITES = 3;
-    private static final String TAG = UILoader.class.getSimpleName();
+    private static final String TAG = MovieLoader.class.getSimpleName();
 
-    public UILoader(Context context) {
+    public MovieLoader(Context context) {
         super(context);
     }
 

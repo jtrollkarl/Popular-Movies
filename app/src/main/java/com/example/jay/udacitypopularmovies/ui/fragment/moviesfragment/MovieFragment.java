@@ -24,7 +24,7 @@ import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.schedulers.SchedulerProvider;
-import com.example.jay.udacitypopularmovies.loader.UILoader;
+import com.example.jay.udacitypopularmovies.loader.MovieLoader;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
 import butterknife.BindView;
@@ -120,7 +120,7 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new UILoader(getActivity().getApplicationContext());
+        return new MovieLoader(getActivity().getApplicationContext());
 
     }
 
