@@ -113,12 +113,12 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void onClickSortPopular() {
-        moviesService.fetchMovies(MoviesService.TYPE_POPULAR);
+        fetchMovies(MovieLoader.LOADER_ID_POPULAR);
     }
 
     @Override
     public void onClickSortTopRated() {
-        moviesService.fetchMovies(MoviesService.TYPE_TOP_RATED);
+        fetchMovies(MovieLoader.LOADER_ID_TOP_RATED);
     }
 
     @Override

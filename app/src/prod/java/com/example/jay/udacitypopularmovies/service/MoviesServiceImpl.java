@@ -94,7 +94,6 @@ public class MoviesServiceImpl implements MoviesService{
     private Retrofit buildRetrofit() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -102,7 +101,6 @@ public class MoviesServiceImpl implements MoviesService{
 
         return new Retrofit.Builder()
                 .baseUrl(Urls.TMDB_BASE_URL)
-                .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
