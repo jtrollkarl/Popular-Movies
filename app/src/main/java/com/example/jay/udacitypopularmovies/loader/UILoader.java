@@ -23,73 +23,52 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 public class UILoader extends AsyncTaskLoader<Cursor> {
 
     public static final String ACTION_FORCE = UILoader.class.getSimpleName() + ":FORCE_LOAD";
+    public static final int LOADER_ID_POPULAR = 1;
+    public static final int LOADER_ID_TOP_RATED = 2;
+    public static final int LOADER_ID_FAVOURITES = 3;
     private static final String TAG = UILoader.class.getSimpleName();
-    private int LOADER_ID;
 
-    public UILoader(int LOADER_ID, Context context) {
+    public UILoader(Context context) {
         super(context);
-        this.LOADER_ID = LOADER_ID;
     }
 
     @Override
     protected void onStartLoading() {
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-        IntentFilter filter = new IntentFilter(ACTION_FORCE);
-        localBroadcastManager.registerReceiver(broadcastReceiver, filter);
         forceLoad();
-
     }
 
     @Override
     public Cursor loadInBackground() {
-        Log.d(TAG, String.valueOf(LOADER_ID));
+        Log.d(TAG, String.valueOf(getId()));
 
-        switch (LOADER_ID){
-            case 1:
+        switch (getId()){
+            case LOADER_ID_POPULAR:
                 FlowCursorList<Movie> listPopular = SQLite.select()
                         .from(Movie.class)
                         .where()
                         .orderBy(Movie_Table.popularity, false)
                         .cursorList();
                 return listPopular.cursor();
-            case 2:
-                FlowCursorList<Movie> listTop_Rated = SQLite.select()
+            case LOADER_ID_TOP_RATED:
+                FlowCursorList<Movie> listTopRated = SQLite.select()
                         .from(Movie.class)
                         .where()
                         .orderBy(Movie_Table.voteAverage, false)
                         .cursorList();
-                return listTop_Rated.cursor();
-            case 3:
+                return listTopRated.cursor();
+            case LOADER_ID_FAVOURITES:
                 FlowCursorList<Favourite> listFav = SQLite.select()
                         .from(Favourite.class)
                         .where()
                         .cursorList();
                 return listFav.cursor();
-
         }
-
         return null;
     }
-
 
     @Override
     public void deliverResult(Cursor data) {
         super.deliverResult(data);
     }
 
-
-    @Override
-    protected void onReset() {
-        super.onReset();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
-    }
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_FORCE)){
-                forceLoad();
-            }
-        }
-    };
 }

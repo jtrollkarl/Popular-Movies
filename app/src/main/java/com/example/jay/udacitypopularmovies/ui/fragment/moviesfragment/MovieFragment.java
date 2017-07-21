@@ -50,14 +50,13 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        checkSetCurrentLoader(savedInstanceState);
         getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private void checkSetCurrentLoader(@Nullable Bundle savedInstanceState) {
         if(savedInstanceState == null || !savedInstanceState.containsKey(LOADER_KEY)){
             Log.d(TAG, "No saved instance state. Loading default loader");
             CURRENT_LOADER = 1;
@@ -73,7 +72,6 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         return inflater.inflate(R.layout.fragment_movie, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -86,8 +84,6 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         adapter = new MovieAdapter(getActivity(), null);
         recyclerView.addItemDecoration(new RecyclerViewItemDecorator(10));
         recyclerView.setAdapter(adapter);
-
-        showMovies();
     }
 
 
@@ -106,7 +102,6 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if(item.getItemId() ==  R.id.menuSortPopularity) {
             presenter.onClickSortPopular();
             return true;
@@ -125,16 +120,8 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (id){
-            case 1:
-                return new UILoader(1, getActivity().getApplicationContext());
-            case 2:
-                return new UILoader(2, getActivity().getApplicationContext());
-            case 3:
-                return new UILoader(3, getActivity().getApplicationContext());
-            default:
-                return new UILoader(1, getActivity().getApplicationContext());
-        }
+        return new UILoader(getActivity().getApplicationContext());
+
     }
 
     @Override
@@ -149,18 +136,11 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         adapter.swapCursor(null);
     }
 
-    private void refreshLoader(int id){
-        if(id != CURRENT_LOADER){
-            getActivity().getSupportLoaderManager().destroyLoader(CURRENT_LOADER);
-            CURRENT_LOADER = id;
-        }else{
-            //Do nothing
-        }
-    }
 
     @Override
     public void showMovies() {
-        getActivity().getLoaderManager().getLoader(CURRENT_LOADER).forceLoad();
+        Log.d(TAG, "Showing movies with id: " + String.valueOf(CURRENT_LOADER));
+        //getActivity().getLoaderManager().getLoader(CURRENT_LOADER).forceLoad();
     }
 
     @Override
@@ -183,14 +163,10 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
 
     }
 
-    @Override
-    public void showMovieFetchError() {
-
-    }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         presenter.fetchMovies();
     }
 

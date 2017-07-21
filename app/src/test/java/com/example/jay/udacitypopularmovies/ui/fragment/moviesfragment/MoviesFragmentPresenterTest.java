@@ -43,13 +43,10 @@ public class MoviesFragmentPresenterTest {
 
     private MoviesFragmentPresenter presenter;
 
-    private BaseSchedulerProvider schedulerProvider;
-
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        schedulerProvider = new ImmediateSchedulers();
         presenter = new MoviesFragmentPresenter(moviesService, databaseService, new ImmediateSchedulers());
         presenter.attachView(view);
     }

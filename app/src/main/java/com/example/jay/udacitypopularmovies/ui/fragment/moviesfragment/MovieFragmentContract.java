@@ -16,6 +16,7 @@ import java.util.List;
 public interface MovieFragmentContract {
 
     interface View extends MvpView {
+
         void showMovies();
 
         void showMovieDetails(Movie movie);
@@ -25,8 +26,6 @@ public interface MovieFragmentContract {
         void showLoading();
 
         void showNotLoading();
-
-        void showMovieFetchError();
 
     }
 
