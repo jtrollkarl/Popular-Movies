@@ -53,7 +53,6 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkSetCurrentLoader(savedInstanceState);
-        getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
     }
 
     private void checkSetCurrentLoader(@Nullable Bundle savedInstanceState) {
@@ -103,14 +102,17 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() ==  R.id.menuSortPopularity) {
+            CURRENT_LOADER = MovieLoader.LOADER_ID_POPULAR;
             presenter.onClickSortPopular();
             return true;
         }
         else if(item.getItemId() == R.id.menuSortRating){
+            CURRENT_LOADER = MovieLoader.LOADER_ID_TOP_RATED;
             presenter.onClickSortTopRated();
             return true;
         }
         else if(item.getItemId() == R.id.menuSortFavourites){
+            CURRENT_LOADER = MovieLoader.LOADER_ID_FAVOURITES;
             presenter.onClickSortFavourites();
             return true;
 
@@ -140,7 +142,7 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     @Override
     public void showMovies() {
         Log.d(TAG, "Showing movies with id: " + String.valueOf(CURRENT_LOADER));
-        //getActivity().getLoaderManager().getLoader(CURRENT_LOADER).forceLoad();
+        getActivity().getSupportLoaderManager().initLoader(CURRENT_LOADER, null, this);
     }
 
     @Override
@@ -167,7 +169,7 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
     @Override
     public void onResume() {
         super.onResume();
-        presenter.fetchMovies();
+        presenter.fetchMovies(CURRENT_LOADER);
     }
 
     @Override

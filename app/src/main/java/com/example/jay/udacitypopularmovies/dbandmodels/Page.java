@@ -13,10 +13,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Page {
 
-
-    public static final String POPULAR = "popular";
-    public static final String TOP_RATED = "top_rated";
-
     @SerializedName("page")
     @Expose
     private int page;

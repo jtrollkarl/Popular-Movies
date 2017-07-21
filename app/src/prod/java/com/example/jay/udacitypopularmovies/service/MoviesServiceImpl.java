@@ -29,14 +29,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MoviesServiceImpl implements MoviesService{
 
     // TODO: 2017-07-19 implement passing of different types
-    private static final String TYPE = Page.POPULAR;
 
     @Override
-    public Single<List<Movie>> fetchMovies() {
+    public Single<List<Movie>> fetchMovies(final String type) {
         return new Single<List<Movie>>() {
             @Override
             protected void subscribeActual(@NonNull final SingleObserver<? super List<Movie>> observer) {
-                Call<Page> moviePage = buildPage(TYPE, 1);
+                Call<Page> moviePage = buildPage(type, 1);
 
                 moviePage.enqueue(new Callback<Page>() {
                     @Override
@@ -61,11 +60,11 @@ public class MoviesServiceImpl implements MoviesService{
     }
 
     @Override
-    public Single<List<Movie>> fetchMoviesPage(final int pageNumber) {
+    public Single<List<Movie>> fetchMoviesPage(final String type, final int pageNumber) {
         return new Single<List<Movie>>() {
             @Override
             protected void subscribeActual(@NonNull final SingleObserver<? super List<Movie>> observer) {
-                Call<Page> moviePage = buildPage(TYPE, pageNumber);
+                Call<Page> moviePage = buildPage(type, pageNumber);
                 moviePage.enqueue(new Callback<Page>() {
                     @Override
                     public void onResponse(Call<Page> call, Response<Page> response) {

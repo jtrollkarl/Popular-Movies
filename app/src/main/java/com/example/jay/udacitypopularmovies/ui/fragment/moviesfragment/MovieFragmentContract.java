@@ -30,9 +30,9 @@ public interface MovieFragmentContract {
     }
 
     interface Actions extends MvpPresenter<View> {
-        void fetchMovies();
+        void fetchMovies(int id);
 
-        void fetchMovies(int pageNumber);
+        void fetchMoviesPage(int id, int pageNumber);
 
         void insertMovies(List<Movie> movies);
 

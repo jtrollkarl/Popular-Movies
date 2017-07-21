@@ -2,6 +2,7 @@ package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.loader.MovieLoader;
 import com.example.jay.udacitypopularmovies.schedulers.BaseSchedulerProvider;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
 import com.example.jay.udacitypopularmovies.service.MoviesService;
@@ -37,8 +38,8 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
     }
 
     @Override
-    public void fetchMovies() {
-        disposables.add(moviesService.fetchMovies()
+    public void fetchMovies(int id) {
+        disposables.add(moviesService.fetchMovies(getType(id))
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
@@ -57,8 +58,8 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
     }
 
     @Override
-    public void fetchMovies(int pageNumber) {
-        disposables.add(moviesService.fetchMoviesPage(pageNumber)
+    public void fetchMoviesPage(int id, int pageNumber) {
+        disposables.add(moviesService.fetchMoviesPage(getType(id), pageNumber)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
@@ -112,17 +113,28 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void onClickSortPopular() {
-
+        moviesService.fetchMovies(MoviesService.TYPE_POPULAR);
     }
 
     @Override
     public void onClickSortTopRated() {
-
+        moviesService.fetchMovies(MoviesService.TYPE_TOP_RATED);
     }
 
     @Override
     public void onClickSortFavourites() {
-
+        if(isViewAttached()){
+            getView().showMovies();
+        }
     }
 
+    private String getType(int loaderId){
+        switch (loaderId){
+            case MovieLoader.LOADER_ID_POPULAR:
+                return MoviesService.TYPE_POPULAR;
+            case MovieLoader.LOADER_ID_TOP_RATED:
+                return MoviesService.TYPE_TOP_RATED;
+        }
+        return MoviesService.TYPE_POPULAR;
+    }
 }

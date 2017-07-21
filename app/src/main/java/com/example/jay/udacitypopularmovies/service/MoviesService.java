@@ -13,8 +13,11 @@ import io.reactivex.Single;
 
 public interface MoviesService {
 
-    Single<List<Movie>> fetchMovies();
+    public static final String TYPE_POPULAR = "popular";
+    public static final String TYPE_TOP_RATED = "top_rated";
 
-    Single<List<Movie>> fetchMoviesPage(int pageNumber);
+    Single<List<Movie>> fetchMovies(String type);
+
+    Single<List<Movie>> fetchMoviesPage(String type, int pageNumber);
 
 }
