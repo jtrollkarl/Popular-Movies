@@ -1,6 +1,7 @@
 package com.example.jay.udacitypopularmovies.service;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.dbandmodels.PopularMoviesDatabase;
@@ -21,6 +22,8 @@ import io.reactivex.CompletableObserver;
 
 public class DatabaseServiceImpl implements DatabaseService {
 
+    private static final String TAG = DatabaseServiceImpl.class.getSimpleName();
+
     @Override
     public Completable insertMovie(final Movie movie) {
         return new Completable() {
@@ -30,7 +33,6 @@ public class DatabaseServiceImpl implements DatabaseService {
                         .beginTransactionAsync(new ITransaction() {
                             @Override
                             public void execute(DatabaseWrapper databaseWrapper) {
-                                movie.update();
                                 movie.save();
                             }
                         }).success(new Transaction.Success() {
@@ -50,6 +52,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public Completable insertMovies(final List<Movie> movies) {
+        Log.d(TAG, "inserting movies...");
         return new Completable() {
             @Override
             protected void subscribeActual(final CompletableObserver s) {
@@ -58,7 +61,6 @@ public class DatabaseServiceImpl implements DatabaseService {
                                 new ProcessModelTransaction.ProcessModel<Movie>() {
                                     @Override
                                     public void processModel(Movie movie, DatabaseWrapper wrapper) {
-                                        movie.update();
                                         movie.save();
                                     }
 
@@ -66,6 +68,7 @@ public class DatabaseServiceImpl implements DatabaseService {
                         .error(new Transaction.Error() {
                             @Override
                             public void onError(Transaction transaction, Throwable error) {
+                                Log.e(TAG, "Database error", error);
                                 s.onError(error);
                             }
                         })
@@ -89,6 +92,39 @@ public class DatabaseServiceImpl implements DatabaseService {
                             @Override
                             public void execute(DatabaseWrapper databaseWrapper) {
                                 movie.delete();
+                            }
+                        })
+                        .success(new Transaction.Success() {
+                            @Override
+                            public void onSuccess(@NonNull Transaction transaction) {
+                                s.onComplete();
+                            }
+                        })
+                        .error(new Transaction.Error() {
+                            @Override
+                            public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
+                                s.onError(error);
+                            }
+                        })
+                        .build();
+            }
+        };
+    }
+
+    @Override
+    public Completable saveFavourite(final Movie movie) {
+        return new Completable() {
+            @Override
+            protected void subscribeActual(final CompletableObserver s) {
+                FlowManager.getDatabase(PopularMoviesDatabase.class)
+                        .beginTransactionAsync(new ITransaction() {
+                            @Override
+                            public void execute(DatabaseWrapper databaseWrapper) {
+                                if (movie.isFavourite()) {
+                                    movie.setFavourite(false);
+                                } else {
+                                    movie.setFavourite(true);
+                                }
                                 movie.save();
                             }
                         })
@@ -104,14 +140,9 @@ public class DatabaseServiceImpl implements DatabaseService {
                                 s.onError(error);
                             }
                         })
-                .build();
+                        .build();
             }
         };
-    }
-
-    @Override
-    public Completable saveFavourite(Movie movie) {
-        return null;
     }
 
 }

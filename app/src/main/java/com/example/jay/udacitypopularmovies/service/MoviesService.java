@@ -1,6 +1,8 @@
 package com.example.jay.udacitypopularmovies.service;
 
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
+import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
 
 import java.util.List;
 
@@ -19,5 +21,9 @@ public interface MoviesService {
     Single<List<Movie>> fetchMovies(String type);
 
     Single<List<Movie>> fetchMoviesPage(String type, int pageNumber);
+
+    Single<List<ResultTrailer>> fetchTrailers(String movieId);
+
+    Single<List<ResultReviews>> fetchReviews(String movieId);
 
 }

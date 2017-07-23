@@ -1,5 +1,7 @@
 package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 
+import android.util.Log;
+
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.loader.MovieLoader;
@@ -11,13 +13,12 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import java.util.List;
 
 import io.reactivex.CompletableObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Jay on 2017-07-16.
@@ -25,12 +26,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContract.View> implements MovieFragmentContract.Actions {
 
+    private static final String TAG = MoviesFragmentPresenter.class.getSimpleName();
     private final MoviesService moviesService;
     private final DatabaseService databaseService;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable disposables;
 
-    public MoviesFragmentPresenter(MoviesService moviesService, DatabaseService databaseService, BaseSchedulerProvider schedulerProvider) {
+    public MoviesFragmentPresenter( MoviesService moviesService, DatabaseService databaseService, BaseSchedulerProvider schedulerProvider) {
         this.moviesService = moviesService;
         this.databaseService = databaseService;
         this.schedulerProvider = schedulerProvider;
@@ -52,6 +54,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
                     public void onError(@NonNull Throwable e) {
                         if (isViewAttached()) {
                             getView().showMessage(R.string.error_fetch_movies);
+                            getView().showMovies();
                         }
                     }
                 }));
@@ -59,7 +62,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void fetchMoviesPage(int id, int pageNumber) {
-        disposables.add(moviesService.fetchMoviesPage(getType(id), pageNumber)
+        moviesService.fetchMoviesPage(getType(id), pageNumber)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
@@ -72,17 +75,23 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
                     public void onError(@NonNull Throwable e) {
                         if (isViewAttached()){
                             getView().showMessage(R.string.error_fetch_movies);
+                            getView().showMovies();
                         }
                     }
-                }));
+                });
     }
 
     @Override
     public void insertMovies(List<Movie> movies) {
-        disposables.add(databaseService.insertMovies(movies)
+        databaseService.insertMovies(movies)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableCompletableObserver() {
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
                     @Override
                     public void onComplete() {
                         if (isViewAttached()) {
@@ -96,12 +105,15 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
                             getView().showMessage(R.string.error_insert_movies);
                         }
                     }
-                }));
+                });
     }
 
     @Override
     public void onPause() {
-        disposables.dispose();
+        Log.d(TAG, "Clearing disposables");
+        Log.d(TAG, "Size of disposables: " + disposables.size() + " " + disposables.toString());
+        disposables.clear();
+        Log.d(TAG, "After clear, size of disposables: " + disposables.size() + " " + disposables.toString());
     }
 
     @Override

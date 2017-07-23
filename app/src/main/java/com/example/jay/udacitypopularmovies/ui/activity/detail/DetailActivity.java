@@ -9,18 +9,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment.DetailFragment;
 
 
-public class DetailActivity extends AppCompatActivity  {
+public class DetailActivity extends AppCompatActivity {
 
 
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static final String TAG = DetailActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,37 +31,25 @@ public class DetailActivity extends AppCompatActivity  {
         Movie movie = getIntent().getParcelableExtra("movie");
         loadMovieDetailsFragment(movie);
 
-        toolbar =  findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         this.setTitle(movie.getTitle());
     }
 
-    private void loadMovieDetailsFragment(Movie movie){
-        Bundle detailsBundle = new Bundle();
-        detailsBundle.putParcelable(DetailFragment.MOVIE_KEY, movie);
+    private void loadMovieDetailsFragment(Movie movie) {
+        DetailFragment detailsFragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag("details_tag");
 
-        Fragment detailsFragment = new DetailFragment();
-        detailsFragment.setArguments(detailsBundle);
-
-        FragmentTransaction detailsTransaction = getSupportFragmentManager().beginTransaction();
-        detailsTransaction.replace(R.id.details_container, detailsFragment);
-        detailsTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        detailsTransaction.commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        toolbar.inflateMenu(R.menu.menu_detail);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        if(detailsFragment == null){
+            detailsFragment = DetailFragment.newInstance(movie);
+            getSupportFragmentManager().beginTransaction().replace(R.id.details_container, detailsFragment, "details_tag").commit();
+        }else {
+            if(detailsFragment.isDetached()){
+                getSupportFragmentManager().beginTransaction().attach(detailsFragment).commit();
             }
-        });
-        return true;
+        }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

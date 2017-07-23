@@ -18,5 +18,4 @@ public class Injector {
     public static DatabaseService provideDatabaseService(){
         return new DatabaseServiceImpl();
     }
-
 }

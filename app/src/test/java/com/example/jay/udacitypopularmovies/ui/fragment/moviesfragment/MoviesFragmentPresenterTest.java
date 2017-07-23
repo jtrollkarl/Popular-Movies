@@ -80,6 +80,7 @@ public class MoviesFragmentPresenterTest {
         when(moviesService.fetchMovies(anyString())).thenReturn(Single.<List<Movie>>error(new Throwable("Connection error")));
         presenter.fetchMovies(1);
 
+        verify(view, times(1)).showMovies();
         verify(view, times(1)).showMessage(R.string.error_fetch_movies);
     }
 
@@ -109,13 +110,20 @@ public class MoviesFragmentPresenterTest {
 
     @Test
     public void onClickSortPopular() throws Exception{
+        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(Movie.getFakes(1)));
+        when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
+
         presenter.onClickSortPopular();
         verify(moviesService, times(1)).fetchMovies(MoviesService.TYPE_POPULAR);
     }
 
     @Test
     public void onClickSortTopRated() throws Exception{
+        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(Movie.getFakes(1)));
+        when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
+
         presenter.onClickSortTopRated();
         verify(moviesService, times(1)).fetchMovies(MoviesService.TYPE_TOP_RATED);
     }
+
 }

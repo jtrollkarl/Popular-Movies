@@ -25,14 +25,15 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
 
     private MovieSelectedListener listener;
 
+    public MovieAdapter(Context context, Cursor cursor, MovieSelectedListener listener) {
+        super(context, cursor);
+        this.listener = listener;
+    }
+
     public interface MovieSelectedListener{
         void onMovieSelected(Movie movie);
     }
 
-    public MovieAdapter(Context context, Cursor cursor) {
-        super(context, cursor);
-        listener = (MovieSelectedListener) context;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +48,7 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
         String posterPath = cursor.getString(cursor.getColumnIndexOrThrow("posterPath"));
         CardView cardView = viewHolder.poster;
         ImageView img = (ImageView) cardView.findViewById(R.id.card_movie_poster);
-        Picasso.with(super.getContext()).load("http://image.tmdb.org/t/p/w185//"+ posterPath).into(img);
+        Picasso.with(super.getContext()).load("http://image.tmdb.org/t/p/w185//"+ posterPath).placeholder(R.drawable.reggie_head).into(img);
 
 
         cardView.setOnClickListener(new View.OnClickListener() {

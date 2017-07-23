@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie_Table;
 import com.raizlabs.android.dbflow.list.FlowCursorList;
@@ -53,9 +52,9 @@ public class MovieLoader extends AsyncTaskLoader<Cursor> {
                         .cursorList();
                 return listTopRated.cursor();
             case LOADER_ID_FAVOURITES:
-                FlowCursorList<Favourite> listFav = SQLite.select()
-                        .from(Favourite.class)
-                        .where()
+                FlowCursorList<Movie> listFav = SQLite.select()
+                        .from(Movie.class)
+                        .where(Movie_Table.isFavourite.is(true))
                         .cursorList();
                 return listFav.cursor();
         }
