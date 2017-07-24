@@ -107,7 +107,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
         Log.d(TAG, "Clearing disposables");
         Log.d(TAG, "Size of disposables: " + disposables.size() + " " + disposables.toString());
         disposables.clear();
-        Log.d(TAG, "After clear, size of disposables: " + disposables.size() + " " + disposables.toString());
+        Log.d(TAG, "After clear, size of disposables: " + disposables.size());
     }
 
     @Override
