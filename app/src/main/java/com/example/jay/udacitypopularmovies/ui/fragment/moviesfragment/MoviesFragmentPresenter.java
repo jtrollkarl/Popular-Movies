@@ -62,7 +62,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void fetchMoviesPage(int id, int pageNumber) {
-        moviesService.fetchMoviesPage(getType(id), pageNumber)
+        disposables.add(moviesService.fetchMoviesPage(getType(id), pageNumber)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
@@ -78,19 +78,16 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
                             getView().showMovies();
                         }
                     }
-                });
+                }));
     }
 
     @Override
     public void insertMovies(List<Movie> movies) {
-        databaseService.insertMovies(movies)
+        disposables.add(databaseService.insertMovies(movies)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+                .subscribeWith(new DisposableCompletableObserver() {
 
-                    }
 
                     @Override
                     public void onComplete() {
@@ -105,7 +102,7 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
                             getView().showMessage(R.string.error_insert_movies);
                         }
                     }
-                });
+                }));
     }
 
     @Override

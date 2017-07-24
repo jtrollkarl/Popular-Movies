@@ -170,7 +170,6 @@ public class MovieFragment extends MvpFragment<MovieFragmentContract.View,
         }else {
             Log.d(TAG, "detail_container found");
             DetailFragment detailFragment = DetailFragment.newInstance(movie);
-
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.details_container, detailFragment);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
