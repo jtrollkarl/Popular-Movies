@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Generated;
 import javax.validation.Valid;
 
 import com.google.gson.annotations.Expose;
@@ -19,7 +18,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Table(database = PopularMoviesDatabase.class, cachingEnabled = true)
-@Generated("org.jsonschema2pojo")
 public class Movie extends BaseModel implements Parcelable {
 
 
@@ -42,7 +40,6 @@ public class Movie extends BaseModel implements Parcelable {
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
-
 
     @SerializedName("genre_ids")
     @Expose
@@ -461,6 +458,30 @@ public class Movie extends BaseModel implements Parcelable {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public static List<Movie> getFakes(int requestedSize){
+        List<Movie> movies = new ArrayList<>();
+        for (int i = 0; i < requestedSize; i++){
+
+            movies.add(new Movie(
+                    "posterPathTest",
+                    true,
+                    "overViewTest",
+                    "99/99/99",
+                    null,
+                    i,
+                    "originalTitleTest " + Integer.toString(i),
+                    "originalLanguageTest",
+                    "titleTest" + Integer.toString(i),
+                    "backdropPathTest",
+                    (double) i,
+                    99,
+                    false,
+                    (double) i
+                    ));
+        }
+        return movies;
     }
 
     @Override

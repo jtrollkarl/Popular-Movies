@@ -1,13 +1,14 @@
 
 package com.example.jay.udacitypopularmovies.dbandmodels;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Generated("org.jsonschema2pojo")
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResultTrailer {
 
     @SerializedName("id")
@@ -34,6 +35,18 @@ public class ResultTrailer {
     @SerializedName("type")
     @Expose
     private String type;
+
+
+    public ResultTrailer(String id, String iso6391, String iso31661, String key, String name, String site, int size, String type) {
+        this.id = id;
+        this.iso6391 = iso6391;
+        this.iso31661 = iso31661;
+        this.key = key;
+        this.name = name;
+        this.site = site;
+        this.size = size;
+        this.type = type;
+    }
 
     /**
      *
@@ -177,6 +190,21 @@ public class ResultTrailer {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    public static List<ResultTrailer> getFakes(int requestedSize){
+        List<ResultTrailer> trailers = new ArrayList<>();
+        for(int i = 0; i < requestedSize; i++){
+            trailers.add(new ResultTrailer(String.valueOf(i),
+                    "test",
+                    "test",
+                    "test KEY",
+                    "test TITLE",
+                    "test SITE",
+                    i,
+                    "test TYPE"));
+        }
+        return trailers;
     }
 
 }

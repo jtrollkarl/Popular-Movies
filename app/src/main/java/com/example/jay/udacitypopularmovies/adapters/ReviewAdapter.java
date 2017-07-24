@@ -11,6 +11,7 @@ import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jay on 2016-10-28.
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder> {
 
-    private ArrayList<ResultReviews> reviews = new ArrayList<>();
+    private List<ResultReviews> reviews;
     private Context mContext;
     private LayoutInflater inflater;
     private static final String TAG = TrailerAdapter.class.getSimpleName();
@@ -46,10 +47,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
 
     @Override
     public int getItemCount() {
-        return reviews.size();
+        if(reviews == null){
+            return 0;
+        }else {
+            return reviews.size();
+        }
     }
 
-    public void setReviews(ArrayList<ResultReviews> reviews){
+    public void setReviews(List<ResultReviews> reviews){
         this.reviews = reviews;
         notifyDataSetChanged();
     }

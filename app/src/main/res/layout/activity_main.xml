@@ -1,8 +1,8 @@
 
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
-    class="com.example.jay.udacitypopularmovies.fragments.MovieFragment"
-    android:id="@+id/fragment_movie"
+    android:id="@+id/container_movies"
+    android:name="com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment.MovieFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 

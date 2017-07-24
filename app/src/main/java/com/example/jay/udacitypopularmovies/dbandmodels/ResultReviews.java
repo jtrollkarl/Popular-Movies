@@ -2,14 +2,16 @@
 package com.example.jay.udacitypopularmovies.dbandmodels;
 
 
-import javax.annotation.Generated;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@Generated("org.jsonschema2pojo")
+
 public class ResultReviews {
 
     @SerializedName("id")
@@ -24,6 +26,14 @@ public class ResultReviews {
     @SerializedName("url")
     @Expose
     private String url;
+
+
+    public ResultReviews(String id, String author, String content, String url) {
+        this.id = id;
+        this.author = author;
+        this.content = content;
+        this.url = url;
+    }
 
     /**
      *
@@ -95,6 +105,20 @@ public class ResultReviews {
      */
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public static List<ResultReviews> getFakes(int requestedSize){
+        List<ResultReviews> reviews = new ArrayList<>();
+        for (int i = 0; i < requestedSize; i++){
+
+            reviews.add(new ResultReviews(
+                String.valueOf(i),
+                    "Author Test " + String.valueOf(i),
+                    "Content Test" + String.valueOf(i),
+                    "url test" + String.valueOf(i)
+            ));
+        }
+        return reviews;
     }
 
 

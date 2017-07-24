@@ -15,6 +15,7 @@ import com.example.jay.udacitypopularmovies.misc.Urls;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jay on 2016-10-27.
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieViewHolder> {
 
-    private ArrayList<ResultTrailer> trailers = new ArrayList<ResultTrailer>();
+    private List<ResultTrailer> trailers;
     private Context context;
     private LayoutInflater inflater;
     private static final String TAG = TrailerAdapter.class.getSimpleName();
@@ -38,7 +39,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
         return new MovieViewHolder(v);
     }
 
-    public void setTrailers(ArrayList<ResultTrailer> trailers){
+    public void setTrailers(List<ResultTrailer> trailers){
         this.trailers = trailers;
         notifyDataSetChanged();
     }
@@ -49,7 +50,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
         final ResultTrailer trailer = trailers.get(position);
         TextView trailerTitle = holder.trailerTitle;
         trailerTitle.setText(trailer.getName());
-        Picasso.with(context).load(Urls.YOUTUBE_THUMBNAIL_BASE +trailer.getKey() + Urls.YOUTUBE_THUMBNAIL_QUALITY_MED).into(holder.trailerImage);
+        Picasso.with(context).load(Urls.YOUTUBE_THUMBNAIL_BASE +trailer.getKey() + Urls.YOUTUBE_THUMBNAIL_QUALITY_MED).error(R.drawable.reggie_head).into(holder.trailerImage);
 
         holder.trailerImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
 
     @Override
     public int getItemCount() {
-        return trailers.size();
+        if(trailers == null){
+            return 0;
+        }else{
+            return trailers.size();
+        }
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder{
