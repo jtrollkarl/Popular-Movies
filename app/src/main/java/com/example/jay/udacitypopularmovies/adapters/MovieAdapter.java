@@ -48,7 +48,7 @@ public class MovieAdapter extends CursorRecyclerViewAdapter<MovieAdapter.ViewHol
         String posterPath = cursor.getString(cursor.getColumnIndexOrThrow("posterPath"));
         CardView cardView = viewHolder.poster;
         ImageView img = (ImageView) cardView.findViewById(R.id.card_movie_poster);
-        Picasso.with(super.getContext()).load("http://image.tmdb.org/t/p/w185//"+ posterPath).placeholder(R.drawable.reggie_head).into(img);
+        Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w185//"+ posterPath).placeholder(R.drawable.reggie_head).error(R.drawable.reggie_head).into(img);
 
 
         cardView.setOnClickListener(new View.OnClickListener() {

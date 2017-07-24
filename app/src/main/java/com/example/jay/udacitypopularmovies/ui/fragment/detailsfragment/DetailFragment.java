@@ -116,31 +116,9 @@ public class DetailFragment extends MvpFragment<DetailsFragmentContract.View, De
 
         if (getArguments().containsKey("movie_key")) {
             movieCurrent = getArguments().getParcelable("movie_key");
-            loadMovie((Movie) getArguments().getParcelable("movie_key"));
+            presenter.loadMovie((Movie) getArguments().getParcelable("movie_key"));
         }
     }
-
-    public void loadMovie(Movie movie) {
-        this.movieCurrent = movie;
-
-        movieSynopsis.setText(movie.getOverview());
-        movieRating.setText(String.valueOf(movie.getVoteAverage()));
-        movieTitle.setText(movie.getTitle());
-        movieRelease.setText(movie.getReleaseDate());
-
-        Log.d(TAG, "loadMovie called");
-        Picasso.with(getActivity())
-                .load(Urls.TMDB_BACKDROP_IMG_URL + movie.getBackdropPath())
-                .into(poster);
-
-        Picasso.with(getActivity())
-                .load(Urls.TMDB_POSTER_IMG_URL + movie.getPosterPath())
-                .into(detailMovie);
-
-        presenter.fetchReviews(String.valueOf(movie.getId()));
-        presenter.fetchTrailers(String.valueOf(movie.getId()));
-    }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -153,7 +131,26 @@ public class DetailFragment extends MvpFragment<DetailsFragmentContract.View, De
 
     @Override
     public void showMovie(Movie movie) {
+        this.movieCurrent = movie;
 
+        movieSynopsis.setText(movie.getOverview());
+        movieRating.setText(String.valueOf(movie.getVoteAverage()));
+        movieTitle.setText(movie.getTitle());
+        movieRelease.setText(movie.getReleaseDate());
+
+        Log.d(TAG, "loadMovie called");
+        Picasso.with(getActivity())
+                .load(Urls.TMDB_BACKDROP_IMG_URL + movie.getBackdropPath())
+                .error(R.drawable.reggie_head)
+                .into(poster);
+
+        Picasso.with(getActivity())
+                .load(Urls.TMDB_POSTER_IMG_URL + movie.getPosterPath())
+                .error(R.drawable.reggie_head)
+                .into(detailMovie);
+
+        presenter.fetchReviews(String.valueOf(movie.getId()));
+        presenter.fetchTrailers(String.valueOf(movie.getId()));
     }
 
     @Override

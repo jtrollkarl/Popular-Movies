@@ -50,7 +50,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MovieVie
         final ResultTrailer trailer = trailers.get(position);
         TextView trailerTitle = holder.trailerTitle;
         trailerTitle.setText(trailer.getName());
-        Picasso.with(context).load(Urls.YOUTUBE_THUMBNAIL_BASE +trailer.getKey() + Urls.YOUTUBE_THUMBNAIL_QUALITY_MED).into(holder.trailerImage);
+        Picasso.with(context).load(Urls.YOUTUBE_THUMBNAIL_BASE +trailer.getKey() + Urls.YOUTUBE_THUMBNAIL_QUALITY_MED).error(R.drawable.reggie_head).into(holder.trailerImage);
 
         holder.trailerImage.setOnClickListener(new View.OnClickListener() {
             @Override

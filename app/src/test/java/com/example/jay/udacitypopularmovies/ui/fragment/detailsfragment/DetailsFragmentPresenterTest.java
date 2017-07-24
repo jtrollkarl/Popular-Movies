@@ -51,6 +51,14 @@ public class DetailsFragmentPresenterTest {
     }
 
     @Test
+    public void loadMovie() throws Exception{
+        Movie fake = Movie.getFakes(1).get(0);
+
+        detailsFragmentPresenter.loadMovie(fake);
+        verify(view, times(1)).showMovie(fake);
+    }
+
+    @Test
     public void fetchReviews_SUCCESS() throws Exception {
         List<ResultReviews> results = ResultReviews.getFakes(5);
 

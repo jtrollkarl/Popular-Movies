@@ -5,7 +5,11 @@ import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
+import com.example.jay.udacitypopularmovies.dbandmodels.Favourite_Table;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+
+
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie_Table;
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -52,9 +56,9 @@ public class MovieLoader extends AsyncTaskLoader<Cursor> {
                         .cursorList();
                 return listTopRated.cursor();
             case LOADER_ID_FAVOURITES:
-                FlowCursorList<Movie> listFav = SQLite.select()
-                        .from(Movie.class)
-                        .where(Movie_Table.isFavourite.is(true))
+                FlowCursorList<Favourite> listFav = SQLite.select()
+                        .from(Favourite.class)
+                        .orderBy(Favourite_Table.popularity, false)
                         .cursorList();
                 return listFav.cursor();
         }

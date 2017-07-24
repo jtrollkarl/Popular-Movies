@@ -12,6 +12,6 @@
     <string name="error_insert_movies">Error saving movies</string>
     <string name="error_fetch_reviews">Error fetching reviews</string>
     <string name="error_fetch_trailers">Error fetching trailers</string>
-    <string name="success_save_movie">Moved added/removed to favourites</string>
+    <string name="success_save_movie">Movie added/removed to favourites</string>
     <string name="error_save_favourite">Error while editing favourite</string>
 </resources>

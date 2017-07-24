@@ -41,7 +41,6 @@ public class Movie extends BaseModel implements Parcelable {
     @Expose
     private String releaseDate;
 
-
     @SerializedName("genre_ids")
     @Expose
     @Valid
@@ -92,10 +91,6 @@ public class Movie extends BaseModel implements Parcelable {
     @SerializedName("vote_average")
     @Expose
     private double voteAverage;
-
-    @Column
-    @SerializedName("is_favourite")
-    private boolean isFavourite;
 
     /**
      * No args constructor for use in serialization
@@ -453,14 +448,6 @@ public class Movie extends BaseModel implements Parcelable {
      */
     public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
-    }
-
-    public boolean isFavourite(){
-        return this.isFavourite;
-    }
-
-    public void setFavourite(boolean isFavourite){
-        this.isFavourite = isFavourite;
     }
 
     public Movie withVoteAverage(double voteAverage) {

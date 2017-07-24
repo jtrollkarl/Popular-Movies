@@ -3,6 +3,7 @@ package com.example.jay.udacitypopularmovies.service;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
 import com.example.jay.udacitypopularmovies.dbandmodels.PopularMoviesDatabase;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -45,7 +46,8 @@ public class DatabaseServiceImpl implements DatabaseService {
                     public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
                         s.onError(error);
                     }
-                }).build();
+                }).build()
+                        .execute();
             }
         };
     }
@@ -77,7 +79,8 @@ public class DatabaseServiceImpl implements DatabaseService {
                             public void onSuccess(Transaction transaction) {
                                 s.onComplete();
                             }
-                        }).build().execute();
+                        }).build()
+                        .execute();
             }
         };
     }
@@ -106,13 +109,15 @@ public class DatabaseServiceImpl implements DatabaseService {
                                 s.onError(error);
                             }
                         })
-                        .build();
+                        .build()
+                        .execute();
             }
         };
     }
 
     @Override
     public Completable saveFavourite(final Movie movie) {
+        final Favourite f = new Favourite(movie);
         return new Completable() {
             @Override
             protected void subscribeActual(final CompletableObserver s) {
@@ -120,12 +125,13 @@ public class DatabaseServiceImpl implements DatabaseService {
                         .beginTransactionAsync(new ITransaction() {
                             @Override
                             public void execute(DatabaseWrapper databaseWrapper) {
-                                if (movie.isFavourite()) {
-                                    movie.setFavourite(false);
+                                if (f.exists()) {
+                                    Log.d(TAG, "Movie WAS favourite");
+                                    f.delete();
                                 } else {
-                                    movie.setFavourite(true);
+                                    Log.d(TAG, "Move WAS NOT favourite");
+                                    f.save();
                                 }
-                                movie.save();
                             }
                         })
                         .success(new Transaction.Success() {
@@ -140,7 +146,8 @@ public class DatabaseServiceImpl implements DatabaseService {
                                 s.onError(error);
                             }
                         })
-                        .build();
+                        .build()
+                        .execute();
             }
         };
     }
