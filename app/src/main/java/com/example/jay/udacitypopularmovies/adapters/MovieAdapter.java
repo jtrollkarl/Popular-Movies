@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.misc.Utils;
 import com.squareup.picasso.Picasso;

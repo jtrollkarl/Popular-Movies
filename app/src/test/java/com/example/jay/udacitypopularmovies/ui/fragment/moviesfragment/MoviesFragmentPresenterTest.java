@@ -1,7 +1,7 @@
 package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 
 import com.example.jay.udacitypopularmovies.schedulers.ImmediateSchedulers;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;

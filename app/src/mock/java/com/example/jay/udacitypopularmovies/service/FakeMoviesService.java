@@ -1,8 +1,8 @@
 package com.example.jay.udacitypopularmovies.service;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.data.Movie;
+import com.example.jay.udacitypopularmovies.data.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.ResultTrailer;
 
 import java.util.ArrayList;
 import java.util.List;

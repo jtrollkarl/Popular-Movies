@@ -2,9 +2,9 @@ package com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment;
 
 import android.support.annotation.StringRes;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
+import com.example.jay.udacitypopularmovies.data.model.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.model.ResultTrailer;
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 

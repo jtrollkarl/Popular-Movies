@@ -3,7 +3,7 @@ package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 import com.example.jay.udacitypopularmovies.loader.MovieLoader;
 import com.example.jay.udacitypopularmovies.schedulers.BaseSchedulerProvider;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
@@ -12,11 +12,8 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.List;
 
-import io.reactivex.CompletableObserver;
-import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 

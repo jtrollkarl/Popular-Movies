@@ -2,7 +2,7 @@ package com.example.jay.udacitypopularmovies.misc;
 
 import android.database.Cursor;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 
 /**
  * Created by Jay on 2016-10-13.

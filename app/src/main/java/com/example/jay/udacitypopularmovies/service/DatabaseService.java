@@ -1,6 +1,6 @@
 package com.example.jay.udacitypopularmovies.service;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 
 import java.util.List;
 

@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.model.ResultReviews;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

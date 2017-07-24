@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Favourite;
-import com.example.jay.udacitypopularmovies.dbandmodels.Favourite_Table;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Favourite;
+import com.example.jay.udacitypopularmovies.data.Favourite_Table;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie_Table;
+import com.example.jay.udacitypopularmovies.data.Movie_Table;
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 

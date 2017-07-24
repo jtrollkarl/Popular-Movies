@@ -1,12 +1,11 @@
 package com.example.jay.udacitypopularmovies.service;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
+import com.example.jay.udacitypopularmovies.data.model.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.model.ResultTrailer;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**

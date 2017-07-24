@@ -3,14 +3,13 @@ package com.example.jay.udacitypopularmovies.service;
 import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
-import com.example.jay.udacitypopularmovies.dbandmodels.Page;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
-import com.example.jay.udacitypopularmovies.dbandmodels.Review;
-import com.example.jay.udacitypopularmovies.dbandmodels.Trailer;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Page;
+import com.example.jay.udacitypopularmovies.data.model.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.model.ResultTrailer;
+import com.example.jay.udacitypopularmovies.data.model.Review;
+import com.example.jay.udacitypopularmovies.data.model.Trailer;
 import com.example.jay.udacitypopularmovies.misc.Urls;
-import com.example.jay.udacitypopularmovies.retrofitservice.PopularMoviesService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -1,11 +1,9 @@
 package com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment;
 
-import android.util.Log;
-
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultReviews;
-import com.example.jay.udacitypopularmovies.dbandmodels.ResultTrailer;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
+import com.example.jay.udacitypopularmovies.data.model.ResultReviews;
+import com.example.jay.udacitypopularmovies.data.model.ResultTrailer;
 import com.example.jay.udacitypopularmovies.schedulers.BaseSchedulerProvider;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
 import com.example.jay.udacitypopularmovies.service.MoviesService;

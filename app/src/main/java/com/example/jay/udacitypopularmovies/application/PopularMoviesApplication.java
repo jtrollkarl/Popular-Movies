@@ -3,7 +3,7 @@ package com.example.jay.udacitypopularmovies.application;
 import android.app.Application;
 import android.util.Log;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.PopularMoviesDatabase;
+import com.example.jay.udacitypopularmovies.data.database.PopularMoviesDatabase;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 

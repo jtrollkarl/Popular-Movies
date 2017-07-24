@@ -1,16 +1,13 @@
 package com.example.jay.udacitypopularmovies.ui.activity.detail;
 
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.ui.fragment.detailsfragment.DetailFragment;
 

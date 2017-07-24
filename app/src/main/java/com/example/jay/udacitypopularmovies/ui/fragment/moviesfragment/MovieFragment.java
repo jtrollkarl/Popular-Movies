@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.jay.udacitypopularmovies.Injector;
 import com.example.jay.udacitypopularmovies.adapters.MovieAdapter;
 import com.example.jay.udacitypopularmovies.R;
-import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.data.model.Movie;
 import com.example.jay.udacitypopularmovies.misc.RecyclerScrollListener;
 import com.example.jay.udacitypopularmovies.misc.RecyclerViewItemDecorator;
 import com.example.jay.udacitypopularmovies.schedulers.SchedulerProvider;
