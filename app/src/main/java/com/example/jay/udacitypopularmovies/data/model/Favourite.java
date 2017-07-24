@@ -1,5 +1,6 @@
-package com.example.jay.udacitypopularmovies.dbandmodels;
+package com.example.jay.udacitypopularmovies.data.model;
 
+import com.example.jay.udacitypopularmovies.data.database.PopularMoviesDatabase;
 import com.raizlabs.android.dbflow.annotation.Table;
 
 /**

@@ -1,9 +1,9 @@
-package com.example.jay.udacitypopularmovies.retrofitservice;
+package com.example.jay.udacitypopularmovies.service;
 
 
-import com.example.jay.udacitypopularmovies.dbandmodels.Page;
-import com.example.jay.udacitypopularmovies.dbandmodels.Review;
-import com.example.jay.udacitypopularmovies.dbandmodels.Trailer;
+import com.example.jay.udacitypopularmovies.data.model.Page;
+import com.example.jay.udacitypopularmovies.data.model.Review;
+import com.example.jay.udacitypopularmovies.data.model.Trailer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

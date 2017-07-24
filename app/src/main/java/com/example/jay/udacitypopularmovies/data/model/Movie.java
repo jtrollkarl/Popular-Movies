@@ -1,5 +1,5 @@
 
-package com.example.jay.udacitypopularmovies.dbandmodels;
+package com.example.jay.udacitypopularmovies.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.example.jay.udacitypopularmovies.data.database.PopularMoviesDatabase;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
