@@ -3,6 +3,9 @@ package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 import com.example.jay.udacitypopularmovies.R;
 import com.example.jay.udacitypopularmovies.data.model.Movie;
 
+
+import com.example.jay.udacitypopularmovies.data.model.Page;
+import com.example.jay.udacitypopularmovies.retrofitservice.RetrofitService;
 import com.example.jay.udacitypopularmovies.schedulers.ImmediateSchedulers;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
 import com.example.jay.udacitypopularmovies.service.MoviesService;
@@ -23,6 +26,7 @@ import io.reactivex.Single;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,7 +43,7 @@ public class MoviesFragmentPresenterTest {
     private DatabaseService databaseService;
 
     @Mock
-    private MoviesService moviesService;
+    private RetrofitService moviesService;
 
     private MoviesFragmentPresenter presenter;
 
@@ -53,9 +57,8 @@ public class MoviesFragmentPresenterTest {
 
     @Test
     public void fetchMovies_SUCCESS() throws Exception {
-        List<Movie> fakes = Movie.getFakes(5);
 
-        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(fakes));
+        when(moviesService.fetchMovies(anyString(), anyInt(), anyString())).thenReturn(Single.just(mock(Page.class)));
         when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
 
         presenter.fetchMovies(1);
@@ -64,20 +67,8 @@ public class MoviesFragmentPresenterTest {
     }
 
     @Test
-    public void fetchMovies_PAGE_SUCCESS() throws Exception {
-        List<Movie> fakes = Movie.getFakes(5);
-
-        when(moviesService.fetchMoviesPage(anyString(), anyInt())).thenReturn(Single.just(fakes));
-        when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
-
-        presenter.fetchMoviesPage(1, 1);
-
-        verify(view, times(1)).showMovies();
-    }
-
-    @Test
     public void fetchMovies_ERROR() throws Exception {
-        when(moviesService.fetchMovies(anyString())).thenReturn(Single.<List<Movie>>error(new Throwable("Connection error")));
+        when(moviesService.fetchMovies(anyString(), anyInt(), anyString())).thenReturn(Single.<Page>error(new Throwable("Connection error")));
         presenter.fetchMovies(1);
 
         verify(view, times(1)).showMovies();
@@ -86,9 +77,7 @@ public class MoviesFragmentPresenterTest {
 
     @Test
     public void fetchMovies_DATABASE_ERROR() throws Exception {
-        List<Movie> fakes = Movie.getFakes(5);
-
-        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(fakes));
+        when(moviesService.fetchMovies(anyString(), anyInt(), anyString())).thenReturn(Single.just(mock(Page.class)));
         when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.error(new Throwable("Database error")));
 
         presenter.fetchMovies(1);
@@ -110,20 +99,20 @@ public class MoviesFragmentPresenterTest {
 
     @Test
     public void onClickSortPopular() throws Exception{
-        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(Movie.getFakes(1)));
+        when(moviesService.fetchMovies(anyString(), anyInt(), anyString())).thenReturn(Single.just(mock(Page.class)));
         when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
 
         presenter.onClickSortPopular();
-        verify(moviesService, times(1)).fetchMovies(MoviesService.TYPE_POPULAR);
+        verify(moviesService, times(1)).fetchMovies(anyString(), anyInt(), anyString());
     }
 
     @Test
     public void onClickSortTopRated() throws Exception{
-        when(moviesService.fetchMovies(anyString())).thenReturn(Single.just(Movie.getFakes(1)));
+        when(moviesService.fetchMovies(anyString(), anyInt(), anyString())).thenReturn(Single.just(mock(Page.class)));
         when(databaseService.insertMovies(ArgumentMatchers.<Movie>anyList())).thenReturn(Completable.complete());
 
         presenter.onClickSortTopRated();
-        verify(moviesService, times(1)).fetchMovies(MoviesService.TYPE_TOP_RATED);
+        verify(moviesService, times(1)).fetchMovies(anyString(), anyInt(), anyString());
     }
 
 }
