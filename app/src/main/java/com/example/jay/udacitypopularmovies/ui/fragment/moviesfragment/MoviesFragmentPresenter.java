@@ -3,8 +3,11 @@ package com.example.jay.udacitypopularmovies.ui.fragment.moviesfragment;
 import android.util.Log;
 
 import com.example.jay.udacitypopularmovies.R;
+import com.example.jay.udacitypopularmovies.apikey.MovieApiKey;
 import com.example.jay.udacitypopularmovies.dbandmodels.Movie;
+import com.example.jay.udacitypopularmovies.dbandmodels.Page;
 import com.example.jay.udacitypopularmovies.loader.MovieLoader;
+import com.example.jay.udacitypopularmovies.retrofitservice.RetrofitService;
 import com.example.jay.udacitypopularmovies.schedulers.BaseSchedulerProvider;
 import com.example.jay.udacitypopularmovies.service.DatabaseService;
 import com.example.jay.udacitypopularmovies.service.MoviesService;
@@ -27,12 +30,12 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContract.View> implements MovieFragmentContract.Actions {
 
     private static final String TAG = MoviesFragmentPresenter.class.getSimpleName();
-    private final MoviesService moviesService;
+    private final RetrofitService moviesService;
     private final DatabaseService databaseService;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable disposables;
 
-    public MoviesFragmentPresenter( MoviesService moviesService, DatabaseService databaseService, BaseSchedulerProvider schedulerProvider) {
+    public MoviesFragmentPresenter(RetrofitService moviesService, DatabaseService databaseService, BaseSchedulerProvider schedulerProvider) {
         this.moviesService = moviesService;
         this.databaseService = databaseService;
         this.schedulerProvider = schedulerProvider;
@@ -41,13 +44,13 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void fetchMovies(int id) {
-        disposables.add(moviesService.fetchMovies(getType(id))
+        disposables.add(moviesService.fetchMovies(getType(id), 1, MovieApiKey.ApiKey)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
+                .subscribeWith(new DisposableSingleObserver<Page>() {
                     @Override
-                    public void onSuccess(@NonNull List<Movie> movies) {
-                        insertMovies(movies);
+                    public void onSuccess(@NonNull Page result) {
+                        insertMovies(result.getResults());
                     }
 
                     @Override
@@ -62,13 +65,13 @@ public class MoviesFragmentPresenter extends MvpBasePresenter<MovieFragmentContr
 
     @Override
     public void fetchMoviesPage(int id, int pageNumber) {
-        disposables.add(moviesService.fetchMoviesPage(getType(id), pageNumber)
+        disposables.add(moviesService.fetchMovies(getType(id), pageNumber, MovieApiKey.ApiKey)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableSingleObserver<List<Movie>>() {
+                .subscribeWith(new DisposableSingleObserver<Page>() {
                     @Override
-                    public void onSuccess(@NonNull List<Movie> movies) {
-                        insertMovies(movies);
+                    public void onSuccess(@NonNull Page result) {
+                        insertMovies(result.getResults());
                     }
 
                     @Override
